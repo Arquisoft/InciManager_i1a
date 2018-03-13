@@ -1,6 +1,8 @@
-package InciManager;
+package InciManager.controllers;
 
 
+import InciManager.entities.AgentInfo;
+import InciManager.entities.Incident;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -16,13 +18,22 @@ public class MainController {
 
     @RequestMapping("/")
     public String landing(Model model) {
-        model.addAttribute("message", new Message());
+        model.addAttribute("message", new AgentInfo());
         return "index";
+    }
+
+    @RequestMapping("/create")
+    public String create(Model model, @ModelAttribute AgentInfo agentInfo){
+        Incident incident = new Incident();
+        incident.setAgentInfo(agentInfo);
+        model.addAttribute("incident",incident);
+
+        return "create";
     }
     
     @RequestMapping("/send")
-    public String send(Model model, @ModelAttribute Message message) {
-        kafkaProducer.send("exampleTopic", message.getMessage());
+    public String send(Model model, @ModelAttribute Incident incident) {
+        kafkaProducer.send(incident.getTopic(), incident.toString());
         return "redirect:/";
     }
 
