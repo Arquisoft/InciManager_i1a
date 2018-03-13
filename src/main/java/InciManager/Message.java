@@ -1,4 +1,4 @@
-package hello;
+package InciManager;
 
 /**
  * Created by herminio on 27/2/17.

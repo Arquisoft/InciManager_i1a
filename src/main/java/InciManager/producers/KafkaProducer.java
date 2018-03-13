@@ -1,4 +1,4 @@
-package hello.producers;
+package InciManager.producers;
 
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
