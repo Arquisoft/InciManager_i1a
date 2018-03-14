@@ -5,18 +5,11 @@ import org.slf4j.LoggerFactory;
 import sun.management.Agent;
 
 public class AgentInfo {
-	
-	// Log
-	//private static final Logger LOG = LoggerFactory.getLogger(UserInfo.class);
 
     private String userName;
     private String password;
+    private String location;
 
-//    public AgentInfo(String userName, String password) {
-//    	//LOG.info("Creating user " + name + ". age: " + age);
-//        this.userName = userName;
-//        this.password = password;
-//    }
     public AgentInfo(){}
 
     public String getUserName() {
@@ -33,5 +26,12 @@ public class AgentInfo {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+    public String getLocation() {
+        return location;
+    }
+
+    public void setLocation(String location) {
+        this.location = location;
     }
 }

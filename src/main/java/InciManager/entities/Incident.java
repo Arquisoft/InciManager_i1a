@@ -16,11 +16,11 @@ public class Incident {
     private Map<String, String> aditionalProperties;
     private String topic;
     private Status status;
-//    public toString(){
-//
-//    }
+    public String toString(){
+        return incidentName;
+    }
 
-    public enum Status{OPEN,IN_PROCESS,CLOSED,CANCELLED};
+    public enum Status{OPEN,IN_PROCESS,CLOSED,CANCELLED}
 
     public Incident (){}
 
