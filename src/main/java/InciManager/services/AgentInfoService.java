@@ -7,8 +7,14 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class AgentInfoService {
+	
     @Autowired
     AgentInfoRepository agentInfoRepository;
+    
+    public AgentInfo findOne(String id) {
+    	return agentInfoRepository.findOne( id );
+    }
+    
     public String getLocation(AgentInfo agentInfo){
         //TODO
         return "";

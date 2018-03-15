@@ -1,9 +1,5 @@
 package InciManager.entities;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import sun.management.Agent;
-
 public class AgentInfo {
 
     private String userName;

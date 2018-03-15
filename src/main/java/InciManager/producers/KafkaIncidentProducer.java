@@ -1,10 +1,11 @@
 package InciManager.producers;
 
-import InciManager.entities.Incident;
+import java.util.Properties;
+
 import org.apache.kafka.clients.producer.Producer;
 import org.apache.kafka.clients.producer.ProducerRecord;
 
-import java.util.Properties;
+import InciManager.entities.Incident;
 
 public class KafkaIncidentProducer {
     public void sendIncident(Incident incident){
@@ -12,5 +13,6 @@ public class KafkaIncidentProducer {
         properties.setProperty("value.serializer","InciManager.producers.AgentInfoSerializer");
         Producer<String, Incident> producer = new org.apache.kafka.clients.producer.KafkaProducer<>(properties);
         producer.send(new ProducerRecord<>(incident.getTopic(), incident));
+        producer.close();
     }
 }

@@ -1,6 +1,5 @@
 package InciManager.entities;
 
-import java.util.Enumeration;
 import java.util.List;
 import java.util.Map;
 

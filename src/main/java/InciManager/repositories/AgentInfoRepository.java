@@ -1,4 +1,8 @@
 package InciManager.repositories;
 
-public class AgentInfoRepository {
+import org.springframework.data.repository.CrudRepository;
+
+import InciManager.entities.AgentInfo;
+
+public interface AgentInfoRepository extends CrudRepository<AgentInfo, String>{
 }
