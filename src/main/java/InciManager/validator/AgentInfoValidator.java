@@ -10,13 +10,16 @@ import InciManager.entities.AgentInfo;
 import InciManager.services.AgentInfoService;
 
 @Component
-public class AgentInfoValidator implements Validator{
+public class AgentInfoValidator implements Validator {
+	
     @Autowired
     private AgentInfoService agentInfoService;
+    
     @Override
     public boolean supports(Class<?> aClass) {
         return AgentInfo.class.equals(aClass);
     }
+    
     @Override
     public void validate(Object target, Errors errors){
         AgentInfo agentInfo= (AgentInfo) target;
