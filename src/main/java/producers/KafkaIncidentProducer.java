@@ -1,11 +1,11 @@
-package InciManager.producers;
+package producers;
 
 import java.util.Properties;
 
 import org.apache.kafka.clients.producer.Producer;
 import org.apache.kafka.clients.producer.ProducerRecord;
 
-import InciManager.entities.Incident;
+import entities.Incident;
 
 public class KafkaIncidentProducer {
     public void sendIncident(Incident incident){

@@ -1,5 +1,8 @@
-package InciManager;
 
+import static org.hamcrest.Matchers.containsString;
+import static org.junit.Assert.assertThat;
+
+import java.net.URL;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -13,13 +16,10 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.web.client.RestTemplate;
 
-import java.net.URL;
 
-import static org.hamcrest.Matchers.containsString;
-import static org.junit.Assert.assertThat;
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@SpringApplicationConfiguration(classes = Application.class)
+@SpringApplicationConfiguration(classes = MainApplication.class)
 @WebAppConfiguration
 @IntegrationTest({"server.port=0"})
 public class MainControllerTest {

@@ -1,4 +1,4 @@
-package InciManager.producers;
+package producers;
 
 import java.util.Map;
 

@@ -1,9 +1,10 @@
-package InciManager.services;
+package services;
 
-import InciManager.entities.AgentInfo;
-import InciManager.repositories.AgentInfoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import entities.AgentInfo;
+import repositories.AgentInfoRepository;
 
 @Service
 public class AgentInfoService {

@@ -1,4 +1,4 @@
-package InciManager.validator;
+package validator;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -6,8 +6,8 @@ import org.springframework.validation.Errors;
 import org.springframework.validation.ValidationUtils;
 import org.springframework.validation.Validator;
 
-import InciManager.entities.AgentInfo;
-import InciManager.services.AgentInfoService;
+import entities.AgentInfo;
+import services.AgentInfoService;
 
 @Component
 public class AgentInfoValidator implements Validator {

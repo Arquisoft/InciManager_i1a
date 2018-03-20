@@ -1,4 +1,4 @@
-package InciManager.entities;
+package entities;
 
 public class AgentInfo {
 
