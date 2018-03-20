@@ -1,5 +1,7 @@
 package controllers;
 
+import java.security.Principal;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -37,20 +39,14 @@ public class MainController {
         return "index";
     }
 
-    @RequestMapping(value = "/", method = RequestMethod.POST)
-    public String create(@Validated AgentInfo agentInfo
+    @RequestMapping(value = "/login", method = RequestMethod.POST)
+    public String login(@Validated AgentInfo agentInfo
             ,BindingResult result, Model model){
         agentInfoValidator.validate(agentInfo,result);
         if(result.hasErrors()){
-            return "/";
+            return "login";
         }
-        agentInfo.setLocation(agentService.getLocation(agentInfo));
-        Incident incident = new Incident();
-        incident.setAgentInfo(agentInfo);
-        incident.setLocation(agentInfo.getLocation());
-        model.addAttribute("incident",incident);
-        model.addAttribute("topics",topicsService.getTopics());
-        return "redirect:create";
+        return "create";
     }
     
     @RequestMapping("/send")
@@ -58,11 +54,25 @@ public class MainController {
         kafkaIncidentProducer.sendIncident(incident);
         return "redirect:/";
     }
+    
+    @RequestMapping("/create")
+    public String create(Model model) {
+        model.addAttribute("agentInfo", new Incident());
+        return "index";
+    }
 
     @RequestMapping(value = "/create", method = RequestMethod.POST)
-    public String loginPost(Model model) {
-    	// TODO
-    	return null;
+    public String createPost(Model model, Principal principal) {
+    	
+    	AgentInfo agentInfo = agentService.findOne( principal.getName() );
+    	agentInfo.setLocation( agentService.getLocation( agentInfo ) );
+        Incident incident = new Incident();
+        incident.setAgentInfo(agentInfo);
+        incident.setLocation(agentInfo.getLocation());
+        model.addAttribute("incident",incident);
+        model.addAttribute("topics",topicsService.getTopics());
+        return "redirect:create";
+        
     }
 
 }
