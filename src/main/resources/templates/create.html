@@ -1,8 +1,22 @@
-<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <title>InciManager</title>
+    <input type="text" id="name" th:field="*{name}" />
+    <input type="text" id="description" th:field="*{description}" />
+    <input type="text" id="location" th:field="*{location}" />
+    <input type="text" id="tags" th:field="*{tags}" />
+    <input type="text" id="additionalInfo" th:field="*{additionalInfo}" />
+    <select name="topic">
+        <option value="colision">Colisión</option>
+        <option value="incendio">Incendio</option>
+        <option value="altercado">Altercado</option>
+        <option value="emergenciaMedica">Emergencia médica</option>
+        <option value="fenomenoMeteorologico">Fenómeno meteorológico</option>
+        <option value="otro">Otro</option>
+    </select>
+    <input type="submit" value="Send" />
 </head>
 <body>
 
