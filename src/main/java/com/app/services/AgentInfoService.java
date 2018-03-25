@@ -8,16 +8,16 @@ import com.app.repositories.AgentInfoRepository;
 
 @Service
 public class AgentInfoService {
-	
-    @Autowired
-    AgentInfoRepository agentInfoRepository;
-    
-    public AgentInfo findOne(String id) {
-    	return agentInfoRepository.findOne( id );
-    }
-    
-    public String getLocation(AgentInfo agentInfo){
-        //TODO
-        return "";
-    }
+
+	@Autowired
+	AgentInfoRepository agentInfoRepository;
+
+	public AgentInfo findById(String id) {
+		return agentInfoRepository.findById(id);
+	}
+
+	public String getLocation(AgentInfo agentInfo) {
+		// TODO
+		return "";
+	}
 }

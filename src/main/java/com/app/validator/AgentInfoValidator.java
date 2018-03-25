@@ -23,14 +23,16 @@ public class AgentInfoValidator implements Validator {
     @Override
     public void validate(Object target, Errors errors){
         AgentInfo agentInfo= (AgentInfo) target;
-        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "username", "error.empty");
+        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "id", "error.empty");
         ValidationUtils.rejectIfEmptyOrWhitespace(errors, "password", "error.empty");
         ValidationUtils.rejectIfEmptyOrWhitespace(errors, "kind", "error.empty");
-        AgentInfo posibleAgent = agentInfoService.findOne( agentInfo.getUsername() );
+        AgentInfo posibleAgent = agentInfoService.findById( agentInfo.getId() );
         if ( posibleAgent == null) {
-        	errors.rejectValue("username", "error.user.identification");
-        } else if ( posibleAgent.getPassword() != agentInfo.getPassword() ) {
+        	errors.rejectValue("id", "error.user.identification");
+        } else if (!posibleAgent.getPassword().equals(agentInfo.getPassword())) {
         	errors.rejectValue("password", "error.password.identification");
+        }else if (posibleAgent.getKind()!=agentInfo.getKind()) {
+        	errors.rejectValue("kind", "error.kind");
         }
     }
 }

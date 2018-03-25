@@ -1,7 +1,5 @@
 package com.app.controllers;
 
-import java.security.Principal;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -10,6 +8,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.app.entities.AgentInfo;
 import com.app.entities.Incident;
@@ -47,14 +46,16 @@ public class MainController {
 			return "login";
 		}
 
-		return "create";
+		return "redirect:/create?id="+agentInfo.getId();
 	}
 
 	@RequestMapping(value = "/create")
-	public String create(Model model, Principal principal) {
-		model.addAttribute("incident", new Incident());
-		AgentInfo agentInfo = agentService.findOne(principal.getName());
-		agentInfo.setLocation(agentService.getLocation(agentInfo));
+	public String create(Model model, @RequestParam("id") Long id) {
+		AgentInfo agentInfo = agentService.findById(String.valueOf(id));
+		Incident i = new Incident();
+		i.setAgentInfo(agentInfo);
+		i.setLocation(agentInfo.getLocation());
+		model.addAttribute("incident", i);
 		model.addAttribute("topics", topicsService.getTopics());
 		return "create";
 	}
