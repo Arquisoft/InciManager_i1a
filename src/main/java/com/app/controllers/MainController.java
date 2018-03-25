@@ -33,10 +33,6 @@ public class MainController {
 	@Autowired
 	private KafkaIncidentProducer kafkaIncidentProducer;
 
-	/*
-	 * @RequestMapping("/") public String landing(Model model) {
-	 * model.addAttribute("agentInfo", new AgentInfo()); return "index"; }
-	 */
 	@RequestMapping(value = "/")
 	public String login(Model model) {
 		model.addAttribute("agentInfo", new AgentInfo());
@@ -54,29 +50,25 @@ public class MainController {
 		return "create";
 	}
 
-	/*
-	 * @RequestMapping("/create") public String create(Model model) {
-	 * model.addAttribute("inident", new Incident()); return "create"; }
-	 */
-
-	@RequestMapping(value = "/create", method = RequestMethod.POST)
-	public String createPost(Model model, Principal principal) {
-
+	@RequestMapping(value = "/create")
+	public String create(Model model, Principal principal) {
+		model.addAttribute("incident", new Incident());
 		AgentInfo agentInfo = agentService.findOne(principal.getName());
 		agentInfo.setLocation(agentService.getLocation(agentInfo));
-		Incident incident = new Incident();
-		incident.setAgentInfo(agentInfo);
-		incident.setLocation(agentInfo.getLocation());
-		model.addAttribute("incident", incident);
 		model.addAttribute("topics", topicsService.getTopics());
-		return "redirect:create";
+		return "create";
+	}
+
+	@RequestMapping(value = "/create", method = RequestMethod.POST)
+	public String createPost(Model model, @ModelAttribute Incident incident) {
+		kafkaIncidentProducer.sendIncident(incident);
+		return "send";
 
 	}
 
-	@RequestMapping("/send")
-	public String send(Model model, @ModelAttribute Incident incident) {
-		kafkaIncidentProducer.sendIncident(incident);
-		return "redirect:/";
+	@RequestMapping(value = "/send")
+	public String send(Model model) {
+		return "send";
 	}
 
 }

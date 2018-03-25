@@ -5,6 +5,7 @@ public class AgentInfo {
 
 	private String username;
 	private String password;
+	private String kind;
 	private String location;
 
 	public AgentInfo() {
@@ -32,5 +33,13 @@ public class AgentInfo {
 
 	public void setLocation(String location) {
 		this.location = location;
+	}
+
+	public String getKind() {
+		return kind;
+	}
+
+	public void setKind(String kind) {
+		this.kind = kind;
 	}
 }
