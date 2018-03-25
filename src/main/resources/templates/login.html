@@ -24,12 +24,16 @@
 </head>
 <body>
 <div id="loginform">
-    <form action="/login" method="post">
+    <form action="/login" method="post" th:object="${agentInfo}">
     		<label for="loginusername" class="grey-text">Username:</label>
 		<input type="text" id="username" class="form-control" name="username"></input>
+		<span class="text-danger" th:if="${#fields.hasErrors('username')}" 
+			      		 	th:errors="*{username}"></span>
 		
     		<label for="loginpassword" class="grey-text">Password:</label>
 		<input type="password" id="password" class="form-control" name="password"></input>
+		<span class="text-danger" th:if="${#fields.hasErrors('password')}" 
+			      		 	th:errors="*{password}"></span>
 		
 		
 		<label for="loginkind" class="grey-text">Kind:</label>

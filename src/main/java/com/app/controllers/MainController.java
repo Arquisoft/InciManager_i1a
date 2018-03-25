@@ -45,18 +45,19 @@ public class MainController {
 
 	@RequestMapping(value = "/login", method = RequestMethod.POST)
 	public String login(@Validated AgentInfo agentInfo, BindingResult result, Model model) {
-		/*
-		 * agentInfoValidator.validate(agentInfo,result); if(result.hasErrors()){ return
-		 * "login"; }
-		 */
+
+		agentInfoValidator.validate(agentInfo, result);
+		if (result.hasErrors()) {
+			return "login";
+		}
+
 		return "create";
 	}
 
-/*	@RequestMapping("/create")
-	public String create(Model model) {
-		model.addAttribute("inident", new Incident());
-		return "create";
-	}*/
+	/*
+	 * @RequestMapping("/create") public String create(Model model) {
+	 * model.addAttribute("inident", new Incident()); return "create"; }
+	 */
 
 	@RequestMapping(value = "/create", method = RequestMethod.POST)
 	public String createPost(Model model, Principal principal) {
@@ -71,11 +72,11 @@ public class MainController {
 		return "redirect:create";
 
 	}
-	
-	 @RequestMapping("/send")
-	    public String send(Model model, @ModelAttribute Incident incident) {
-	        kafkaIncidentProducer.sendIncident(incident);
-	        return "redirect:/";
-	    }
+
+	@RequestMapping("/send")
+	public String send(Model model, @ModelAttribute Incident incident) {
+		kafkaIncidentProducer.sendIncident(incident);
+		return "redirect:/";
+	}
 
 }

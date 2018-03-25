@@ -23,13 +23,13 @@ public class AgentInfoValidator implements Validator {
     @Override
     public void validate(Object target, Errors errors){
         AgentInfo agentInfo= (AgentInfo) target;
-        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "username", "El usuario no puede ser vacío");
-        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "password", "El password no puede ser vacío");
+        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "username", "error.empty");
+        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "password", "error.empty");
         AgentInfo posibleAgent = agentInfoService.findOne( agentInfo.getUsername() );
         if ( posibleAgent == null) {
-        	errors.rejectValue("username", "El username no está registrado en la base de datos");
+        	errors.rejectValue("username", "error.user.identification");
         } else if ( posibleAgent.getPassword() != agentInfo.getPassword() ) {
-        	errors.rejectValue("password", "La contraseña no coincide con la guardada");
+        	errors.rejectValue("password", "error.password.identification");
         }
     }
 }

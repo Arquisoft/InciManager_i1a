@@ -3,9 +3,7 @@ package com.app.entities;
 import java.util.List;
 import java.util.Map;
 
-/**
- * Created by herminio on 27/2/17.
- */
+
 public class Incident {
     private AgentInfo agentInfo;
     private String incidentName;

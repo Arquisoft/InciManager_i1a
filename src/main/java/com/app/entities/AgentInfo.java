@@ -1,5 +1,6 @@
 package com.app.entities;
 
+
 public class AgentInfo {
 
 	private String username;
