@@ -1,24 +1,53 @@
-<html xmlns:th="http://www.thymeleaf.org">
+<!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>InciManager</title>
-    <input type="text" id="name" th:field="*{name}" />
-    <input type="text" id="description" th:field="*{description}" />
-    <input type="text" id="location" th:field="*{location}" />
-    <input type="text" id="tags" th:field="*{tags}" />
-    <input type="text" id="additionalInfo" th:field="*{additionalInfo}" />
-    <select name="topic">
-        <option value="colision">Colisión</option>
-        <option value="incendio">Incendio</option>
-        <option value="altercado">Altercado</option>
-        <option value="emergenciaMedica">Emergencia médica</option>
-        <option value="fenomenoMeteorologico">Fenómeno meteorológico</option>
-        <option value="otro">Otro</option>
-    </select>
-    <input type="submit" value="Send" />
-</head>
+
+
 <body>
 
+    <div style="height: 70%">
+        <div class="flex-center flex-column">
+			
+			
+	<div class="card animated fadeIn" style="width: 35%">
+	    <div>Create incident</div>
+	    <div class="card-body">
+			
+			<!-- Default form Create incident -->
+			<form method="post" action="/send" th:object="${inident}">			
+
+			    <label for="createName" class="grey-text">Name</label>
+			    <input type="text" id="incidentName" class="form-control" name="incidentName"></input>
+			    
+			    <label for="createDescription" class="grey-text">Description</label>
+			    <input type="text" id="description" class="form-control" name="description"></input>
+			    
+			    <label for="createLocation" class="grey-text">Location</label>
+			    <input type="text" id="location" class="form-control" name="location"></input>
+			    
+			    <label for="createTags" class="grey-text">Tags</label>
+			    <input type="text" id="tags" class="form-control" name="tags"></input>
+				
+				
+				<select name="topic">
+       			 <option value="colision">Colisión</option>
+       			 <option value="incendio">Incendio</option>
+       			 <option value="altercado">Altercado</option>
+      			 <option value="emergenciaMedica">Emergencia médica</option>
+       			 <option value="fenomenoMeteorologico">Fenómeno meteorológico</option>
+      			 <option value="otro">Otro</option>
+    				</select>
+				
+			    <div class="text-center mt-4">
+			        <button class="btn btn-info btn-rounded" type="submit">Send</button>
+			    </div>
+			</form>
+			                      
+        </div>
+        </div>
+        </div>
+	</div>
+	
+    
 </body>
+
 </html>
