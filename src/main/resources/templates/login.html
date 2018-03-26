@@ -10,7 +10,7 @@
   <div style="height: 70%">
         <div class="flex-center flex-column">
 	<br/>
-    <form action="/login" method="post" th:object="${agentInfo}">
+    <form action="/login" method="post" th:object="${agent}">
         <p class="h4 text-center mb-4">Log in</p>
         <div class="form-group">
     		<label for="formGrouploginusername" class="grey-text">Username:</label>
@@ -32,7 +32,8 @@
 		
 		<div class="form-group">
 		<label for="formGrouploginkind" class="grey-text">Kind:</label>
-		<input type="text" id="formGroupkind" class="form-control" name="kind" style="width: 130%"></input>
+		<input type="number" id="formGroupkind" class="form-control" name="kind" style="width: 130%" value="0"
+			min="0" max="3"></input>
 		<span class="text-danger" th:if="${#fields.hasErrors('kind')}" 
 			      		 	th:errors="*{kind}"></span>
 		</div>

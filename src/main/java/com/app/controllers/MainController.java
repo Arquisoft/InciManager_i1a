@@ -43,18 +43,18 @@ public class MainController {
 	
 	@RequestMapping(value = "/login", method = RequestMethod.GET)
 	public String getLogin(Model model) {
-		model.addAttribute("agentInfo", new Agent());
+		model.addAttribute("agent", new Agent());
 		return "login";
 	}
 
 	@RequestMapping(value = "/login", method = RequestMethod.POST)
-	public String login(@Validated Agent agentInfo, BindingResult result, Model model) {
+	public String login(@Validated Agent agent, BindingResult result, Model model) {
 
-		agentInfoValidator.validate(agentInfo, result);
+		agentInfoValidator.validate(agent, result);
 		if (result.hasErrors()) {
 			return "login";
 		}
-		return "redirect:/create/" + agentInfo.getId();
+		return "redirect:/create/" + agent.getId();
 	}
 
 	@RequestMapping(value = "/create/{id}")

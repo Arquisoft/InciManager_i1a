@@ -25,9 +25,9 @@ public class AgentInfoValidator implements Validator {
         Agent agentInfo= (Agent) target;
         ValidationUtils.rejectIfEmptyOrWhitespace(errors, "id", "error.empty");
         ValidationUtils.rejectIfEmptyOrWhitespace(errors, "password", "error.empty");
-        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "kind", "error.empty");
+        if(agentInfo.getKind() == 0) errors.rejectValue("kind", "error.kind");
         
-        if(agentInfo.getId() != null)
+        if(!agentInfo.getId().equals("") || !agentInfo.getPassword().equals("") || agentInfo.getKind() != 0)
         { 
 	        Agent posibleAgent = agentInfoService.findById( agentInfo.getId() );
 	        if ( posibleAgent == null) {
