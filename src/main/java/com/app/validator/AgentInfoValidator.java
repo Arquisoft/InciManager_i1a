@@ -6,7 +6,7 @@ import org.springframework.validation.Errors;
 import org.springframework.validation.ValidationUtils;
 import org.springframework.validation.Validator;
 
-import com.app.entities.AgentInfo;
+import com.app.entities.Agent;
 import com.app.services.AgentInfoService;
 
 @Component
@@ -17,16 +17,16 @@ public class AgentInfoValidator implements Validator {
     
     @Override
     public boolean supports(Class<?> aClass) {
-        return AgentInfo.class.equals(aClass);
+        return Agent.class.equals(aClass);
     }
     
     @Override
     public void validate(Object target, Errors errors){
-        AgentInfo agentInfo= (AgentInfo) target;
+        Agent agentInfo= (Agent) target;
         ValidationUtils.rejectIfEmptyOrWhitespace(errors, "id", "error.empty");
         ValidationUtils.rejectIfEmptyOrWhitespace(errors, "password", "error.empty");
         ValidationUtils.rejectIfEmptyOrWhitespace(errors, "kind", "error.empty");
-        AgentInfo posibleAgent = agentInfoService.findById( agentInfo.getId() );
+        Agent posibleAgent = agentInfoService.findById( agentInfo.getId() );
         if ( posibleAgent == null) {
         	errors.rejectValue("id", "error.user.identification");
         } else if (!posibleAgent.getPassword().equals(agentInfo.getPassword())) {

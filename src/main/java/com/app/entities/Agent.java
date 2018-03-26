@@ -5,7 +5,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 import java.util.Objects;
 
 @Document(collection = "loader_i1a_collection") // Esta coleccion se usa para la bd remota
-public class AgentInfo {
+public class Agent {
 
 	@Id
 	private String idautogenerado;
@@ -17,10 +17,10 @@ public class AgentInfo {
 	private String id;
 	private int kind;
 
-	public AgentInfo() {
+	public Agent() {
 	}
 
-	public AgentInfo(String name, String email, String password, String id, int kind) {
+	public Agent(String name, String email, String password, String id, int kind) {
 		this.name = name;
 		this.email = email;
 		this.kind = kind;
@@ -30,12 +30,12 @@ public class AgentInfo {
 		this.kind = kind;
 	}
 
-	public AgentInfo(String name, String email, String password, String location, String id, int kind) {
+	public Agent(String name, String email, String password, String location, String id, int kind) {
 		this(name, email, password, id, kind);
 		this.location = location;
 	}
 
-	public AgentInfo(String[] data) {
+	public Agent(String[] data) {
 		this(data[0], data[1], data[2], data[3], data[4], Integer.parseInt(data[5]));
 	}
 
@@ -108,7 +108,7 @@ public class AgentInfo {
 			return true;
 		if (o == null || getClass() != o.getClass())
 			return false;
-		AgentInfo agentInfo = (AgentInfo) o;
+		Agent agentInfo = (Agent) o;
 		return kind == agentInfo.kind && Objects.equals(idautogenerado, agentInfo.idautogenerado)
 				&& Objects.equals(name, agentInfo.name) && Objects.equals(email, agentInfo.email)
 				&& Objects.equals(password, agentInfo.password) && Objects.equals(location, agentInfo.location)

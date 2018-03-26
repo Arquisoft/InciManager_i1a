@@ -1,27 +1,50 @@
 package com.app.producers;
 
-import java.util.Properties;
-
 import javax.annotation.ManagedBean;
 
-import org.apache.kafka.clients.producer.Producer;
-import org.apache.kafka.clients.producer.ProducerRecord;
 import org.apache.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.kafka.core.KafkaTemplate;
+import org.springframework.kafka.support.SendResult;
+import org.springframework.util.concurrent.ListenableFuture;
+import org.springframework.util.concurrent.ListenableFutureCallback;
 
 import com.app.entities.Incident;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+
 @ManagedBean
 public class KafkaIncidentProducer {
-	 private static final Logger logger = Logger.getLogger(KafkaIncidentProducer.class);
+	private static final Logger logger = Logger.getLogger(KafkaIncidentProducer.class);
+	@Autowired
+	private KafkaTemplate<String, String> kafkaTemplate;
 
-    public void sendIncident(Incident incident){
-        Properties properties = new Properties();
-        properties.put("bootstrap.servers", "localhost:2851");
-        properties.put("key.serializer","com.app.producers.AgentInfoSerializer");
-        properties.put("value.serializer", "com.app.producers.AgentInfoSerializer");
-        Producer<String, Incident> producer = new org.apache.kafka.clients.producer.KafkaProducer<>(properties);
-        producer.send(new ProducerRecord<>(incident.getTopic(), incident));
-        logger.info("Success on sending incident \"" + incident.getIncidentName() + "\" to topic " + incident.getTopic());
-        producer.close();
-    }
+	public void send(Incident incident) {
+		String data = convertIncident(incident);
+		ListenableFuture<SendResult<String, String>> future = kafkaTemplate.send(incident.getTopic(), data);
+		future.addCallback(new ListenableFutureCallback<SendResult<String, String>>() {
+			@Override
+			public void onSuccess(SendResult<String, String> result) {
+				logger.info("Success on sending incident with topic " + incident.getTopic());
+			}
+
+			@Override
+			public void onFailure(Throwable ex) {
+				logger.error("Error on sending message \"" + "\", stacktrace " + ex.getMessage());
+			}
+		});
+	}
+
+	private String convertIncident(Incident incident) {
+		String data;
+		ObjectMapper mapper = new ObjectMapper();
+		try {
+			data = mapper.writeValueAsString(incident);
+		} catch (JsonProcessingException e) {
+			logger.info("Fail on the creation of the incident.");
+			data = incident.toString();
+		}
+		return data;
+	}
 
 }
