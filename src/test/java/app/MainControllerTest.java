@@ -134,8 +134,12 @@ public class MainControllerTest {
 	}
 
 	@Test
-	public void login() throws Exception {
-
+	public void create() throws Exception {
+		String message = mockMvc.perform(get("/create/8"))
+				.andExpect(status().isOk())
+				.andExpect(content().string(containsString("")))
+				.andReturn().getResponse().getErrorMessage();
+		assertNull(message);
 	}
 
 	@Test
