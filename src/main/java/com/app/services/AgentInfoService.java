@@ -16,6 +16,7 @@ public class AgentInfoService {
 		return agentInfoRepository.findById(id);
 	}
 
+	
 	public String getLocation(AgentInfo agentInfo) {
 		// TODO
 		return "";

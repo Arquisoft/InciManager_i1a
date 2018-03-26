@@ -6,9 +6,9 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 
 import com.app.entities.AgentInfo;
 import com.app.entities.Incident;
@@ -45,13 +45,12 @@ public class MainController {
 		if (result.hasErrors()) {
 			return "login";
 		}
-
-		return "redirect:/create?id="+agentInfo.getId();
+		return "redirect:/create/" + agentInfo.getId();
 	}
 
-	@RequestMapping(value = "/create")
-	public String create(Model model, @RequestParam("id") Long id) {
-		AgentInfo agentInfo = agentService.findById(String.valueOf(id));
+	@RequestMapping(value = "/create/{id}")
+	public String create(Model model, @PathVariable("id") Long id) {
+		AgentInfo agentInfo = agentService.findById( String.valueOf( id ) );
 		Incident i = new Incident();
 		i.setAgentInfo(agentInfo);
 		i.setLocation(agentInfo.getLocation());
