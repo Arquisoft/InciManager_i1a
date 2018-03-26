@@ -37,12 +37,13 @@
 		<label for="createTopics" class="grey-text">Topics</label> 
 		<select
 			name="topic">
-			<option value="colision">Colisión</option>
+			<option th:each="topic : ${topics}" th:value="${topic}" th:text="${topic}"></option>
+			<!--<option value="colision">Colisión</option>
 			<option value="incendio">Incendio</option>
 			<option value="altercado">Altercado</option>
 			<option value="emergenciaMedica">Emergencia médica</option>
 			<option value="fenomenoMeteorologico">Fenómeno meteorológico</option>
-			<option value="otro">Otro</option>
+			<option value="otro">Otro</option>-->
 		</select>
 
 		<div class="text-center mt-4">

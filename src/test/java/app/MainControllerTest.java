@@ -21,6 +21,7 @@ import com.app.MainApplication;
 
 
 
+@SuppressWarnings("deprecation")
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringApplicationConfiguration(classes = MainApplication.class)
 @WebAppConfiguration
@@ -41,16 +42,15 @@ public class MainControllerTest {
 
 	@Test
 	public void getLanding() throws Exception {
-		String userURI = base.toString() + "/user";  
 		ResponseEntity<String> response = template.getForEntity(base.toString(), String.class);
-		assertThat(response.getBody(), containsString("Hola"));
+		assertThat(response.getBody(), containsString("Log in"));
 	}
 	
 	@Test
 	public void getUser() throws Exception {
-		String userURI = base.toString() + "/user";  
-		ResponseEntity<String> response = template.getForEntity(userURI, String.class);
-	//	UserInfo expected = new UserInfo("pepe",0);
+		String userURI = base.toString() + "/login";  
+		template.getForEntity(userURI, String.class);
+		//	UserInfo expected = new UserInfo("pepe",0);
 	}
 
 }
