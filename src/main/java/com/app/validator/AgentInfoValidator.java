@@ -27,13 +27,16 @@ public class AgentInfoValidator implements Validator {
         ValidationUtils.rejectIfEmptyOrWhitespace(errors, "password", "error.empty");
         ValidationUtils.rejectIfEmptyOrWhitespace(errors, "kind", "error.empty");
         
-        Agent posibleAgent = agentInfoService.findById( agentInfo.getId() );
-        if ( posibleAgent == null) {
-        	errors.rejectValue("id", "error.user.identification");
-        } else if (!posibleAgent.getPassword().equals(agentInfo.getPassword())) {
-        	errors.rejectValue("password", "error.password.identification");
-        }else if (posibleAgent.getKind()!=agentInfo.getKind()) {
-        	errors.rejectValue("kind", "error.kind");
+        if(agentInfo.getId() != null)
+        { 
+	        Agent posibleAgent = agentInfoService.findById( agentInfo.getId() );
+	        if ( posibleAgent == null) {
+	        	errors.rejectValue("id", "error.user.identification");
+	        } else if (!posibleAgent.getPassword().equals(agentInfo.getPassword())) {
+	        	errors.rejectValue("password", "error.password.identification");
+	        }else if (posibleAgent.getKind()!=agentInfo.getKind()) {
+	        	errors.rejectValue("kind", "error.kind");
+	        }
         }
     }
 }

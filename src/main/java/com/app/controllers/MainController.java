@@ -41,6 +41,11 @@ public class MainController {
 		model.addAttribute("agentInfo", new Agent());
 		return "login";
 	}
+	
+	@RequestMapping(value = "/login", method = RequestMethod.GET)
+	public String getLogin() {
+		return "login";
+	}
 
 	@RequestMapping(value = "/login", method = RequestMethod.POST)
 	public String login(@Validated Agent agentInfo, BindingResult result, Model model) {
