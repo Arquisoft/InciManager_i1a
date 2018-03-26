@@ -7,13 +7,13 @@ import org.springframework.validation.ValidationUtils;
 import org.springframework.validation.Validator;
 
 import com.app.entities.Agent;
-import com.app.services.AgentInfoService;
+import com.app.services.AgentService;
 
 @Component
 public class AgentValidator implements Validator {
 	
     @Autowired
-    private AgentInfoService agentInfoService;
+    private AgentService agentInfoService;
     
     @Override
     public boolean supports(Class<?> aClass) {
