@@ -1,5 +1,6 @@
 package com.app.controllers;
 
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -35,6 +36,8 @@ public class MainController {
 
 	@Autowired
 	private KafkaIncidentProducer kafkaIncidentProducer;
+	
+	private Agent agent;
 
 	@RequestMapping(value = "/")
 	public String login() {
@@ -54,6 +57,8 @@ public class MainController {
 		if (result.hasErrors()) {
 			return "login";
 		}
+		
+		this.agent = agentService.findById( agent.getId() );
 		return "redirect:/create/" + agent.getId();
 	}
 
@@ -71,6 +76,8 @@ public class MainController {
 	public String createPost(Model model, @ModelAttribute Incident incident) {
 		parseAditionalProperties(incident);
 		parseLocation(incident);
+		incident.setAgent(this.agent);
+		incident.setDate(new Date());
 		kafkaIncidentProducer.send(incident);
 		return "send";
 
