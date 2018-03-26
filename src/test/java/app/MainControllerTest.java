@@ -84,7 +84,7 @@ public class MainControllerTest {
 				.param("id", "8")
 				.param("password", "lucia123")
 				.param("kind",""))
-				.andExpect(content().string(containsString("This field must not be empty")))
+				.andExpect(content().string(containsString("Wrong kind")))
 				.andReturn().getResponse().getErrorMessage();
 		assertNull( message );
 		message = mockMvc.perform(post("/login")
