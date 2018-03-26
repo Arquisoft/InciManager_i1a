@@ -59,12 +59,16 @@ public class MainController {
 
 	@RequestMapping(value = "/create/{id}")
 	public String create(Model model, @PathVariable("id") Long id) {
-		Agent agentInfo = agentService.findById(String.valueOf(id));
-		Incident i = new Incident();
-		i.setAgent(agentInfo);
-		model.addAttribute("incident", i);
-		model.addAttribute("topics", topicsService.getTopics());
-		return "create";
+		if(this.agent != null)
+		{
+			Agent agentInfo = agentService.findById(String.valueOf(id));
+			Incident i = new Incident();
+			i.setAgent(agentInfo);
+			model.addAttribute("incident", i);
+			model.addAttribute("topics", topicsService.getTopics());
+			return "create";
+		}
+		else return "redirect:/login";
 	}
 
 	@RequestMapping(value = "/create", method = RequestMethod.POST)
@@ -105,7 +109,8 @@ public class MainController {
 
 	@RequestMapping(value = "/send")
 	public String send(Model model) {
-		return "send";
+		if(this.agent != null) return "send";
+		else return "redirect:/login";
 	}
 
 }
