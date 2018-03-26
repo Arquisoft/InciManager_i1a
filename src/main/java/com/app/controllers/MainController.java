@@ -37,13 +37,13 @@ public class MainController {
 	private KafkaIncidentProducer kafkaIncidentProducer;
 
 	@RequestMapping(value = "/")
-	public String login(Model model) {
-		model.addAttribute("agentInfo", new Agent());
+	public String login() {
 		return "login";
 	}
 	
 	@RequestMapping(value = "/login", method = RequestMethod.GET)
-	public String getLogin() {
+	public String getLogin(Model model) {
+		model.addAttribute("agentInfo", new Agent());
 		return "login";
 	}
 
