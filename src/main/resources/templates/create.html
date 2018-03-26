@@ -27,18 +27,18 @@
 		<br/>
 		
 		<label for="createTags" class="grey-text">Tags</label> 
-		<input type="text" id="tags" class="form-control" name="tags" placeholder="Example: raining, storm"></input> 
+		<input type="text" id="tags" class="form-control" name="tags" placeholder="Example: raining, storm" style="width: 130%"></input> 
 		<br/>
 		
 		<label for="createAditionalProperties" class="grey-text">Aditional information</label>
 		<input type="text" id="aditionalPropertiesString" class="form-control" name="aditionalPropertiesString"
-				placeholder="Example: picture/imgur.com, video/youtube.com"></input>
+				placeholder="Example: picture/imgur.com, video/youtube.com" style="width: 130%"></input>
 		<br/>
 		
 		
 		<label for="createTopics" class="grey-text">Topics</label> 
 		<select
-			name="topic">
+			name="topic" style="width: 130%">
 			<option th:each="topic : ${topics}" th:value="${topic}" th:text="${topic}"></option>
 			<!--<option value="colision">Colisión</option>
 			<option value="incendio">Incendio</option>

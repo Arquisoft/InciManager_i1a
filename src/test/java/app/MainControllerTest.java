@@ -5,6 +5,7 @@ import static org.junit.Assert.assertNull;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.model;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.redirectedUrl;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -26,6 +27,7 @@ import org.springframework.web.client.RestTemplate;
 import org.springframework.web.context.WebApplicationContext;
 
 import com.app.MainApplication;
+import com.app.entities.Incident;
 
 
 
@@ -57,12 +59,14 @@ public class MainControllerTest {
 	@Test
 	public void getLanding() throws Exception {
 		template.getForEntity(base.toString(), String.class);
-		mockMvc.perform(get("/"))
-		.andExpect(status().isOk())
-		.andExpect(content().string(containsString("Log in")))
-		.andExpect(content().string(containsString("Username:")))
-		.andExpect(content().string(containsString("Password:")))
-		.andExpect(content().string(containsString("Kind:")));
+		String message = mockMvc.perform(get("/"))
+				.andExpect(status().isOk())
+				.andExpect(content().string(containsString("Log in")))
+				.andExpect(content().string(containsString("Username:")))
+				.andExpect(content().string(containsString("Password:")))
+				.andExpect(content().string(containsString("Kind:")))
+				.andReturn().getResponse().getErrorMessage();
+		assertNull( message );
 	}
 
 	@Test
@@ -138,6 +142,9 @@ public class MainControllerTest {
 		String message = mockMvc.perform(get("/create/8"))
 				.andExpect(status().isOk())
 				.andExpect(content().string(containsString("")))
+				.andExpect(model().attributeExists("incident", "topics"))
+				.andExpect(model().errorCount(0))
+				//				.andExpect(model().attribute("incident", Incident.class))
 				.andReturn().getResponse().getErrorMessage();
 		assertNull(message);
 	}
