@@ -10,7 +10,7 @@ import com.app.entities.Agent;
 import com.app.services.AgentInfoService;
 
 @Component
-public class AgentInfoValidator implements Validator {
+public class AgentValidator implements Validator {
 	
     @Autowired
     private AgentInfoService agentInfoService;

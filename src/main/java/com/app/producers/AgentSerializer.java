@@ -7,7 +7,7 @@ import org.apache.kafka.common.serialization.Serializer;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-public class AgentInfoSerializer implements Serializer{
+public class AgentSerializer implements Serializer{
     @Override
     public void configure(Map map, boolean b) {
 

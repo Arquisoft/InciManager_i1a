@@ -1,6 +1,7 @@
 package app;
 
 import static org.hamcrest.Matchers.containsString;
+import static org.junit.Assert.assertNull;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
@@ -65,56 +66,75 @@ public class MainControllerTest {
 
 	@Test
 	public void loginCorrecto() throws Exception {
-		mockMvc.perform(post("/login")
+		String message = mockMvc.perform(post("/login")
 				.param("id", "8")
 				.param("password", "lucia123")
 				.param("kind","1"))
-		.andExpect(status().is3xxRedirection());
+				.andExpect(status().is3xxRedirection())
+				.andReturn().getResponse().getErrorMessage();
+		assertNull(message);
 	}
 
 	@Test
 	public void loginIncorrecto() throws Exception {
 
 		// Campos vacios
-		mockMvc.perform(post("/login")
+		String message = mockMvc.perform(post("/login")
 				.param("id", "8")
 				.param("password", "lucia123")
 				.param("kind",""))
-		.andExpect(content().string(containsString("This field must not be empty")));
-		mockMvc.perform(post("/login")
+				.andExpect(content().string(containsString("This field must not be empty")))
+				.andReturn().getResponse().getErrorMessage();
+		assertNull(message);
+		message = mockMvc.perform(post("/login")
 				.param("id", "8")
 				.param("password", "")
 				.param("kind","1"))
-		.andExpect(content().string(containsString("This field must not be empty")));
-		mockMvc.perform(post("/login")
+				.andExpect(content().string(containsString("This field must not be empty")))
+				.andReturn().getResponse().getErrorMessage();
+		assertNull(message);
+		message = mockMvc.perform(post("/login")
 				.param("id", "")
 				.param("password", "lucia123")
 				.param("kind","1"))
-		.andExpect(content().string(containsString("This field must not be empty")));
+				.andExpect(content().string(containsString("This field must not be empty")))
+				.andReturn().getResponse().getErrorMessage();
+		assertNull(message);
 
 		// Id incorrecto
-		mockMvc.perform(post("/login")
+		message = mockMvc.perform(post("/login")
 				.param("id", "7")
 				.param("password", "lucia123")
 				.param("kind","1"))
-		.andExpect(status().isOk())
-		.andExpect(content().string(containsString("Username not registered in the data base")));
+				.andExpect(status().isOk())
+				.andExpect(content().string(containsString("Username not registered in the data base")))
+				.andReturn().getResponse().getErrorMessage();
+		assertNull(message);
 
 		// Contraseña incorrecta
-		mockMvc.perform(post("/login")
+		message = mockMvc.perform(post("/login")
 				.param("id", "8")
 				.param("password", "lucia13")
 				.param("kind","1"))
-		.andExpect(content().string(containsString("Wrong password")));
+				.andExpect(content().string(containsString("Wrong password")))
+				.andReturn().getResponse().getErrorMessage();
+		assertNull(message);
 
 		// Kind code incorrecto
-		mockMvc.perform(post("/login")
+		message = mockMvc.perform(post("/login")
 				.param("id", "8")
 				.param("password", "lucia123")
 				.param("kind","9"))
-		.andExpect(status().isOk())
-		.andExpect(content().string(containsString("Wrong kind")));
-		
+				.andExpect(status().isOk())
+				.andExpect(content().string(containsString("Wrong kind")))
+				.andReturn().getResponse().getErrorMessage();
+		assertNull(message);
+
+	}
+
+	@Test
+	public void login() throws Exception {
+
 	}
 
 }

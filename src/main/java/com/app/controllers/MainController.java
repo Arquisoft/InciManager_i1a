@@ -19,13 +19,13 @@ import com.app.producers.KafkaIncidentProducer;
 import com.app.services.AgentInfoService;
 import com.app.services.TopicsService;
 import com.app.utils.LatLng;
-import com.app.validator.AgentInfoValidator;
+import com.app.validator.AgentValidator;
 
 @Controller
 public class MainController {
 
 	@Autowired
-	private AgentInfoValidator agentInfoValidator;
+	private AgentValidator agentInfoValidator;
 
 	@Autowired
 	private AgentInfoService agentService;
