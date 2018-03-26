@@ -7,7 +7,7 @@ import com.app.entities.Agent;
 import com.app.repositories.AgentInfoRepository;
 
 @Service
-public class AgentInfoService {
+public class AgentService {
 
 	@Autowired
 	AgentInfoRepository agentInfoRepository;

@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import com.app.entities.Agent;
 import com.app.entities.Incident;
 import com.app.producers.KafkaIncidentProducer;
-import com.app.services.AgentInfoService;
+import com.app.services.AgentService;
 import com.app.services.TopicsService;
 import com.app.utils.LatLng;
 import com.app.validator.AgentInfoValidator;
@@ -25,10 +25,10 @@ import com.app.validator.AgentInfoValidator;
 public class MainController {
 
 	@Autowired
-	private AgentInfoValidator agentInfoValidator;
+	private AgentInfoValidator agentValidator;
 
 	@Autowired
-	private AgentInfoService agentService;
+	private AgentService agentService;
 
 	@Autowired
 	private TopicsService topicsService;
@@ -50,7 +50,7 @@ public class MainController {
 	@RequestMapping(value = "/login", method = RequestMethod.POST)
 	public String login(@Validated Agent agent, BindingResult result, Model model) {
 
-		agentInfoValidator.validate(agent, result);
+		agentValidator.validate(agent, result);
 		if (result.hasErrors()) {
 			return "login";
 		}
