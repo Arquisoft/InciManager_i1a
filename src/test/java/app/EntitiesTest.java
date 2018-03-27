@@ -25,8 +25,8 @@ import org.springframework.test.context.web.WebAppConfiguration;
 import com.app.MainApplication;
 import com.app.entities.Agent;
 import com.app.entities.Incident;
-import com.app.entities.Operator;
 import com.app.entities.Incident.IncidentStatus;
+import com.app.entities.Operator;
 import com.app.utils.LatLng;
 
 @SuppressWarnings("deprecation")
@@ -120,12 +120,14 @@ public class EntitiesTest {
 		List<String> tags = new ArrayList<String>();;
 		Operator operator = new Operator(); 
 		String topic = "Esto es una prueba";
-		String locationString;
-		LatLng location;
-		Date date;
+		String locationString = "43.354872,-5.8513731";
+		double lat = Double.parseDouble("43.354872");
+		double lng = Double.parseDouble("-5.8513731");
+		LatLng location = new LatLng(lat, lng);
+		Date date = new Date();
 		Map<String, String> aditionalProperties = new HashMap<String, String>();
 		String aditionalPropertiesString;
-		IncidentStatus status;
+		IncidentStatus status = IncidentStatus.OPEN;
 		
 		Incident incident = new Incident();
 		assertEquals("Incident [agent='null', incidentName='null', description='null'"
@@ -141,14 +143,17 @@ public class EntitiesTest {
 		
 		incident.setIncidentName(incidentName);
 		assertNotNull(incident.getIncidentName());
+		assertTrue(incidentName.equals(incident.getIncidentName()));
 		
 		incident.setDescription(description);
 		assertNotNull(incident.getIncidentName());
+		assertTrue(description.equals(incident.getDescription()));
 		
 		tags.add("Test");
 		tags.add("Troll");
 		incident.setTags(tags);
 		assertNotNull(incident.getTags());
+		assertTrue(tags.equals(incident.getTags()));
 		assertTrue(incident.getTags().size() == 2);
 		
 		operator.setUsername("TesterOperator");
@@ -158,7 +163,38 @@ public class EntitiesTest {
 		
 		incident.setTopic(topic);
 		assertNotNull(incident.getTopic());
+		assertTrue(topic.equals(incident.getTopic()));
 		
+		incident.setLocationString(locationString);
+		assertNotNull(incident.getLocationString());
+		assertTrue(locationString.equals(incident.getLocationString()));
+		
+		incident.setLocation(location);
+		assertNotNull(incident.getLocation());
+		assertTrue(location.equals(incident.getLocation()));
+		
+		incident.setDate(date);
+		assertNotNull(incident.getDate());
+		assertTrue(new Date().after(incident.getDate()));
+		
+		aditionalProperties.put("Temperatura", "Muy alta");
+		incident.setAditionalProperties(aditionalProperties);
+		assertNotNull(incident.getAditionalProperties());
+		assertFalse(incident.getAditionalProperties().isEmpty());
+		assertTrue(aditionalProperties.equals(incident.getAditionalProperties()));
+		
+		aditionalPropertiesString = "Temperatura muy alta";
+		incident.setAditionalPropertiesString(aditionalPropertiesString);
+		assertNotNull(incident.getAditionalPropertiesString());
+		assertTrue(incident.getAditionalPropertiesString().equals(aditionalPropertiesString));
+		
+		incident.setStatus(status);
+		assertNotNull(incident.getStatus());
+		assertTrue(status.equals(incident.getStatus()));
+		
+		Incident incident2 = new Incident();
+		assertFalse(incident.hashCode() == incident2.hashCode());
+		assertFalse(incident.equals(incident2));
 	}
 
 }
