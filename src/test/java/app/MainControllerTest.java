@@ -5,7 +5,6 @@ import static org.junit.Assert.assertNull;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.redirectedUrl;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import java.net.URL;
@@ -27,8 +26,6 @@ import org.springframework.web.context.WebApplicationContext;
 
 import com.app.MainApplication;
 
-
-
 @SuppressWarnings("deprecation")
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringApplicationConfiguration(classes = MainApplication.class)
@@ -49,7 +46,7 @@ public class MainControllerTest {
 
 	@Before
 	public void setUp() throws Exception {
-		this.base = new URL("http://localhost:" + port + "/");
+		this.base = new URL("http://localhost:" + port + "/login");
 		template = new TestRestTemplate();
 		mockMvc = MockMvcBuilders.webAppContextSetup(context).build();
 	}
@@ -57,7 +54,7 @@ public class MainControllerTest {
 	@Test
 	public void getLanding() throws Exception {
 		template.getForEntity(base.toString(), String.class);
-		mockMvc.perform(get("/"))
+		mockMvc.perform(get("/login"))
 		.andExpect(status().isOk())
 		.andExpect(content().string(containsString("Log in")))
 		.andExpect(content().string(containsString("Username:")))

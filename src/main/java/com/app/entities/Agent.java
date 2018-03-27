@@ -72,10 +72,6 @@ public class Agent {
 		return this.kind;
 	}
 
-	public void setIdautogenerado(String idautogenerado) {
-		this.idautogenerado = idautogenerado;
-	}
-
 	public void setName(String name) {
 		this.name = name;
 	}
@@ -98,9 +94,9 @@ public class Agent {
 
 	@Override
 	public String toString() {
-		return "AgentInfo{" + "idautogenerado='" + idautogenerado + '\'' + ", name='" + name + '\'' + ", email='"
-				+ email + '\'' + ", password='" + password + '\'' + ", location='" + location + '\'' + ", id='" + id
-				+ '\'' + ", kind=" + kind + "}";
+		return "Agent [idautogenerado='" + idautogenerado + "', name='" + name + "', email='"
+				+ email + "', password='" + password + "', location='" + location + "', id='" + id
+				+ "', kind=" + kind + "]";
 	}
 
 	@Override
@@ -118,7 +114,6 @@ public class Agent {
 
 	@Override
 	public int hashCode() {
-
 		return Objects.hash(idautogenerado, name, email, password, location, id, kind);
 	}
 
