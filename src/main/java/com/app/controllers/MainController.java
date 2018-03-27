@@ -1,7 +1,6 @@
 package com.app.controllers;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.Date;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -18,8 +17,8 @@ import com.app.entities.Incident;
 import com.app.producers.KafkaIncidentProducer;
 import com.app.services.AgentService;
 import com.app.services.TopicsService;
-import com.app.utils.LatLng;
 import com.app.validator.AgentInfoValidator;
+import com.app.validator.IncidentValidator;
 
 @Controller
 public class MainController {
@@ -35,13 +34,13 @@ public class MainController {
 
 	@Autowired
 	private KafkaIncidentProducer kafkaIncidentProducer;
-
-	@RequestMapping(value = "/")
-	public String login() {
-		return "login";
-	}
 	
-	@RequestMapping(value = "/login", method = RequestMethod.GET)
+	@Autowired
+	private IncidentValidator incidentValidator;
+
+	private Agent agent;
+
+	@RequestMapping(value = { "/login", "/", "" }, method = RequestMethod.GET)
 	public String getLogin(Model model) {
 		model.addAttribute("agent", new Agent());
 		return "login";
@@ -54,56 +53,42 @@ public class MainController {
 		if (result.hasErrors()) {
 			return "login";
 		}
+
+		this.agent = agentService.findById(agent.getId());
 		return "redirect:/create/" + agent.getId();
 	}
 
 	@RequestMapping(value = "/create/{id}")
 	public String create(Model model, @PathVariable("id") Long id) {
-		Agent agentInfo = agentService.findById(String.valueOf(id));
-		Incident i = new Incident();
-		i.setAgent(agentInfo);
-		model.addAttribute("incident", i);
-		model.addAttribute("topics", topicsService.getTopics());
-		return "create";
+		if(this.agent != null)
+		{
+			Agent agentInfo = agentService.findById(String.valueOf(id));
+			Incident i = new Incident();
+			i.setAgent(agentInfo);
+			model.addAttribute("incident", i);
+			model.addAttribute("topics", topicsService.getTopics());
+			return "create";
+		}
+		else return "redirect:/login";
 	}
 
 	@RequestMapping(value = "/create", method = RequestMethod.POST)
-	public String createPost(Model model, @ModelAttribute Incident incident) {
-		parseAditionalProperties(incident);
-		parseLocation(incident);
+	public String createPost(Model model, @ModelAttribute Incident incident,BindingResult result) {
+		incidentValidator.validate(incident, result);
+		if (result.hasErrors()) {
+			return "redirect:/create/"+this.agent.getId();
+		}
+		incident.setAgent(this.agent);
+		incident.setDate(new Date());
 		kafkaIncidentProducer.send(incident);
 		return "send";
 
 	}
 
-	private void parseLocation(Incident incident) {
-
-		if (incident.getLocationString() != null && !incident.getLocationString().isEmpty()) {
-			String[] location = incident.getLocationString().trim().split(",");
-			incident.setLocation(new LatLng(Double.parseDouble(location[0]), Double.parseDouble(location[1])));
-		}
-
-	}
-
-	private void parseAditionalProperties(Incident incident) {
-		if (incident.getAditionalPropertiesString() != null && !incident.getAditionalProperties().isEmpty()) {
-			String[] aditionalProperties = incident.getAditionalPropertiesString().trim().split(",");
-			Map<String, String> result = new HashMap<String, String>();
-			for (int i = 0; i < aditionalProperties.length; i++) {
-				String[] pv = aditionalProperties[i].split("/");
-				result.put(pv[0], pv[1]);
-			}
-			incident.setAditionalProperties(result);
-		} else {
-			incident.setAditionalProperties(new HashMap<String, String>());
-
-		}
-
-	}
-
 	@RequestMapping(value = "/send")
 	public String send(Model model) {
-		return "send";
+		if(this.agent != null) return "send";
+		else return "redirect:/login";
 	}
 
 }
