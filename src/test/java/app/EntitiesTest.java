@@ -56,7 +56,7 @@ public class EntitiesTest {
         Agent user = new Agent(name,email,password,NIF,kind);
         Agent user2 = new Agent(name,email,password,location,NIF,kind);
         
-        String[] valores = {name, password, email, location, NIF, String.valueOf(kind)};
+        String[] valores = {name, email, password, location, NIF, String.valueOf(kind)};
         Agent user3 = new Agent(valores);
 
         assertTrue(user.getName().equals(name));
