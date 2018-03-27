@@ -181,7 +181,7 @@ public class EntitiesTest {
 		
 		incident.setDate(date);
 		assertNotNull(incident.getDate());
-		assertTrue(new Date().after(incident.getDate()));
+		assertTrue(date.equals(incident.getDate()));
 		
 		aditionalProperties.put("Temperatura", "Muy alta");
 		incident.setAditionalProperties(aditionalProperties);
