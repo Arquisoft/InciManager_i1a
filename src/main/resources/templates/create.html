@@ -14,20 +14,28 @@
 	    <p class="h4 text-center mb-4">Create incident</p>
 	        
 		<label for="createName" class="grey-text">Name</label> 
-		<input type="text" id="incidentName" class="form-control" name="incidentName" style="width: 130%"></input> 
+		<input type="text" id="incidentName" class="form-control" name="incidentName" style="width: 130%"></input>
+		<span class="text-danger" th:if="${#fields.hasErrors('incidentName')}" 
+			      		 	th:errors="*{incidentName}"></span> 
 		<br/>
 		
 		<label for="createDescription" class="grey-text">Description</label> 
-		<input type="text" id="description" class="form-control" name="description" style="width: 130%"></input> 
+		<input type="text" id="description" class="form-control" name="description" style="width: 130%"></input>
+		<span class="text-danger" th:if="${#fields.hasErrors('description')}" 
+			      		 	th:errors="*{description}"></span> 
 		<br/>
 		
 		<label for="createLocation" class="grey-text">Location</label> 
 		<input type="text" id="locationString" class="form-control" name="locationString" style="width: 130%" 
 				placeholder="Example: 43.360,-5.845"></input>
+		<span class="text-danger" th:if="${#fields.hasErrors('locationString')}" 
+			      		 	th:errors="*{locationString}"></span>		
 		<br/>
 		
 		<label for="createTags" class="grey-text">Tags</label> 
 		<input type="text" id="tags" class="form-control" name="tags" placeholder="Example: raining, storm" style="width: 130%"></input> 
+		<span class="text-danger" th:if="${#fields.hasErrors('tags')}" 
+			      		 	th:errors="*{tags}"></span>
 		<br/>
 		
 		<label for="createAditionalProperties" class="grey-text">Aditional information</label>

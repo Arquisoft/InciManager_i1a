@@ -6,7 +6,6 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.model;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.redirectedUrl;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import java.net.URL;
@@ -27,9 +26,6 @@ import org.springframework.web.client.RestTemplate;
 import org.springframework.web.context.WebApplicationContext;
 
 import com.app.MainApplication;
-import com.app.entities.Incident;
-
-
 
 @SuppressWarnings("deprecation")
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -51,7 +47,7 @@ public class MainControllerTest {
 
 	@Before
 	public void setUp() throws Exception {
-		this.base = new URL("http://localhost:" + port + "/");
+		this.base = new URL("http://localhost:" + port + "/login");
 		template = new TestRestTemplate();
 		mockMvc = MockMvcBuilders.webAppContextSetup(context).build();
 	}
@@ -88,7 +84,7 @@ public class MainControllerTest {
 				.param("id", "8")
 				.param("password", "lucia123")
 				.param("kind",""))
-				.andExpect(content().string(containsString("This field must not be empty")))
+				.andExpect(content().string(containsString("Wrong kind")))
 				.andReturn().getResponse().getErrorMessage();
 		assertNull( message );
 		message = mockMvc.perform(post("/login")
