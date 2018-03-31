@@ -29,12 +29,6 @@ public class MainController {
 	@Autowired
 	private KafkaIncidentProducer kafkaIncidentProducer;
 
-	@RequestMapping(value = "/")
-	public String login(Model model) {
-		model.addAttribute("agentInfo", new AgentInfo());
-		return "login";
-	}
-
 	@RequestMapping(value = "/create/{id}")
 	public String create(Model model, @PathVariable("id") Long id) {
 		AgentInfo agentInfo = agentService.findById( String.valueOf( id ) );

@@ -17,6 +17,12 @@ public class LoginController {
 	@Autowired
 	private AgentInfoValidator agentInfoValidator;
 	
+	@RequestMapping(value = "/")
+	public String login(Model model) {
+		model.addAttribute("agentInfo", new AgentInfo());
+		return "login";
+	}
+	
 	@RequestMapping(value = "/login", method = RequestMethod.POST)
 	public String login(@Validated AgentInfo agentInfo, BindingResult result, Model model) {
 
