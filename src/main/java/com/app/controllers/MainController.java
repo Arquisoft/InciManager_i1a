@@ -21,9 +21,6 @@ import com.app.validator.AgentInfoValidator;
 public class MainController {
 
 	@Autowired
-	private AgentInfoValidator agentInfoValidator;
-
-	@Autowired
 	private AgentInfoService agentService;
 
 	@Autowired
@@ -36,16 +33,6 @@ public class MainController {
 	public String login(Model model) {
 		model.addAttribute("agentInfo", new AgentInfo());
 		return "login";
-	}
-
-	@RequestMapping(value = "/login", method = RequestMethod.POST)
-	public String login(@Validated AgentInfo agentInfo, BindingResult result, Model model) {
-
-		agentInfoValidator.validate(agentInfo, result);
-		if (result.hasErrors()) {
-			return "login";
-		}
-		return "redirect:/create/" + agentInfo.getId();
 	}
 
 	@RequestMapping(value = "/create/{id}")
