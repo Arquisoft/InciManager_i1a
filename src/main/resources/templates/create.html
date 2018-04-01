@@ -3,7 +3,15 @@
 	  xmlns="http://www.w3.org/1999/xhtml"
       xmlns:th="http://www.thymeleaf.org">
 <head th:replace="fragments/head" />
+<script>
+	if (navigator.geolocation) {
+		navigator.geolocation.getCurrentPosition(fillCoordinates)
+	}
 
+	function fillCoordinates(position){
+		document.getElementById('locationString').value=position.coords.latitude + ","+position.coords.longitude
+	}
+</script>
 <body>
 	<nav th:replace="fragments/nav" />
   <div style="height: 70%">
