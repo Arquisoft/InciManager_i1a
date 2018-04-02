@@ -76,7 +76,8 @@ public class MainController {
 	public String createPost(Model model, @ModelAttribute Incident incident,BindingResult result) {
 		incidentValidator.validate(incident, result);
 		if (result.hasErrors()) {
-			return "redirect:/create/"+this.agent.getId();
+			model.addAttribute("topics", topicsService.getTopics());
+			return "create";
 		}
 		incident.setAgent(this.agent);
 		incident.setDate(new Date());
