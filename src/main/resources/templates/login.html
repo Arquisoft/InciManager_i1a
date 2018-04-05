@@ -10,8 +10,10 @@
   <div style="height: 70%">
         <div class="flex-center flex-column">
 	<br/>
-    <div class="form-group">
-    <label for="formGrouploginusername" class="grey-text">Username:</label>
+    <form action="/login" method="post" th:object="${agentInfo}">
+        <p class="h4 text-center mb-4">Log in</p>
+        <div class="form-group">
+    		<label for="formGrouploginusername" class="grey-text">Username:</label>
 		<input type="text" id="formGroupusername" class="form-control" name="id" style="width: 130%"></input>
 		<span class="text-danger" th:if="${#fields.hasErrors('id')}" 
 			      		 	th:errors="*{id}"></span>

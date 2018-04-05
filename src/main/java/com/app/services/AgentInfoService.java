@@ -1,13 +1,6 @@
 package com.app.services;
 
-import java.io.IOException;
-import java.util.List;
-
 import org.json.JSONObject;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
@@ -18,19 +11,30 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
 import com.app.entities.AgentInfo;
-import com.app.repositories.AgentInfoRepository;
 
 @Service
 public class AgentInfoService {
+		
+	public AgentInfo findById(AgentInfo agentInfo) {
+		AgentInfo response;
+		
+		try {
+			HttpHeaders header = new HttpHeaders();
+			header.setContentType(MediaType.APPLICATION_JSON);
 
-	@Value("http://localhost:8080/login")
-	private String agentsUrl;
-	
-	@Autowired
-	private AgentInfoRepository agentInfoRepository;
-	
-	public AgentInfo findById(String id) {
-		return agentInfoRepository.findById(id);
+			JSONObject request = new JSONObject();
+			request.put("id", agentInfo.getId());
+	        request.put("password", agentInfo.getPassword());
+			request.put("kind", agentInfo.getKind());
+
+			HttpEntity<String> entity = new HttpEntity<String>(request.toString(), header);
+			response = this.getResponseAgentInfo("http://localhost:8080/restAgentInfo", HttpMethod.POST, entity);
+		
+		} catch (Exception e) {
+			return null;
+		}
+		
+        return response;
 	}
 
 	public String getLocation(AgentInfo agentInfo) {
@@ -46,12 +50,12 @@ public class AgentInfoService {
 			header.setContentType(MediaType.APPLICATION_JSON);
 
 			JSONObject request = new JSONObject();
-			request.put("login", agentInfo.getId());
+			request.put("id", agentInfo.getId());
 	        request.put("password", agentInfo.getPassword());
 			request.put("kind", agentInfo.getKind());
 
 			HttpEntity<String> entity = new HttpEntity<String>(request.toString(), header);
-			response = this.getResponseStatus(agentsUrl, HttpMethod.POST, entity);
+			response = this.getResponseStatus("http://localhost:8080/restLogin", HttpMethod.POST, entity);
 		
 		} catch (Exception e) {
 			return false;
@@ -63,5 +67,10 @@ public class AgentInfoService {
 	public HttpStatus getResponseStatus(String url, HttpMethod method, HttpEntity<String> entity) {
 		ResponseEntity<String> response = new RestTemplate().exchange(url, method, entity, String.class);
         return response.getStatusCode();
+	}
+	
+	public AgentInfo getResponseAgentInfo(String url, HttpMethod method, HttpEntity<String> entity) {
+		ResponseEntity<AgentInfo> response = new RestTemplate().exchange(url, method, entity, AgentInfo.class);
+        return response.getBody();
 	}
 }

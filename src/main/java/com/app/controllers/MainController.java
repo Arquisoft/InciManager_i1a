@@ -1,5 +1,7 @@
 package com.app.controllers;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -30,8 +32,8 @@ public class MainController {
 	private KafkaIncidentProducer kafkaIncidentProducer;
 
 	@RequestMapping(value = "/create/{id}")
-	public String create(Model model, @PathVariable("id") Long id) {
-		AgentInfo agentInfo = agentService.findById( String.valueOf( id ) );
+	public String create(Model model, @PathVariable("id") Long id, HttpSession session) {
+		AgentInfo agentInfo = (AgentInfo) session.getAttribute("agent");
 		Incident i = new Incident();
 		i.setAgentInfo(agentInfo);
 		i.setLocation(agentInfo.getLocation());
