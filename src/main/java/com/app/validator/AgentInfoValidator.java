@@ -12,9 +12,9 @@ import com.app.services.AgentInfoService;
 
 @Component
 public class AgentInfoValidator implements Validator {
-	
-    @Autowired
-    private AgentInfoService agentInfoService;
+
+	@Autowired
+	private AgentInfoService agentInfoService;
 
 	@Override
 	public boolean supports(Class<?> aClass) {
