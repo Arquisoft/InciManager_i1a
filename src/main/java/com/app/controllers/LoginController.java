@@ -25,22 +25,22 @@ public class LoginController {
 	
 	@RequestMapping(value = "/")
 	public String login(Model model) {
-		model.addAttribute("agentInfo", new Agent());
+		model.addAttribute("agent", new Agent());
 		return "login";
 	}
 	
 	@RequestMapping(value = "/login", method = RequestMethod.POST)
-	public String login(@Validated Agent agentInfo, BindingResult result, Model model,
+	public String login(@Validated Agent agent, BindingResult result, Model model,
 			HttpSession session) {
 
-		agentInfoValidator.validate(agentInfo, result);
-		if (result.hasErrors() || !agentInfoService.verifyAgent(agentInfo)) {
+		agentInfoValidator.validate(agent, result);
+		if (result.hasErrors() || !agentInfoService.verifyAgent(agent)) {
 			return "login";
 		}
 		
-		session.setAttribute("agent", agentInfo);
+		session.setAttribute("agent", agent);
 		
-		return "redirect:/create/" + agentInfo.getId();
+		return "redirect:/create/" + agent.getId();
 	}
 
 }
