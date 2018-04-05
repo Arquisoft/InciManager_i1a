@@ -10,7 +10,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-import com.app.entities.AgentInfo;
+import com.app.entities.Agent;
 import com.app.services.AgentInfoService;
 import com.app.validator.AgentInfoValidator;
 
@@ -25,12 +25,12 @@ public class LoginController {
 	
 	@RequestMapping(value = "/")
 	public String login(Model model) {
-		model.addAttribute("agentInfo", new AgentInfo());
+		model.addAttribute("agentInfo", new Agent());
 		return "login";
 	}
 	
 	@RequestMapping(value = "/login", method = RequestMethod.POST)
-	public String login(@Validated AgentInfo agentInfo, BindingResult result, Model model,
+	public String login(@Validated Agent agentInfo, BindingResult result, Model model,
 			HttpSession session) {
 
 		agentInfoValidator.validate(agentInfo, result);

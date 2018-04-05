@@ -10,13 +10,13 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
-import com.app.entities.AgentInfo;
+import com.app.entities.Agent;
 
 @Service
 public class AgentInfoService {
 		
-	public AgentInfo findById(AgentInfo agentInfo) {
-		AgentInfo response;
+	public Agent findById(Agent agentInfo) {
+		Agent response;
 		
 		try {
 			HttpHeaders header = new HttpHeaders();
@@ -37,12 +37,12 @@ public class AgentInfoService {
         return response;
 	}
 
-	public String getLocation(AgentInfo agentInfo) {
+	public String getLocation(Agent agentInfo) {
 		// TODO
 		return "";
 	}
 		
-	public boolean verifyAgent(AgentInfo agentInfo) {
+	public boolean verifyAgent(Agent agentInfo) {
 		HttpStatus response;
 		
 		try {
@@ -69,8 +69,8 @@ public class AgentInfoService {
         return response.getStatusCode();
 	}
 	
-	public AgentInfo getResponseAgentInfo(String url, HttpMethod method, HttpEntity<String> entity) {
-		ResponseEntity<AgentInfo> response = new RestTemplate().exchange(url, method, entity, AgentInfo.class);
+	public Agent getResponseAgentInfo(String url, HttpMethod method, HttpEntity<String> entity) {
+		ResponseEntity<Agent> response = new RestTemplate().exchange(url, method, entity, Agent.class);
         return response.getBody();
 	}
 }
