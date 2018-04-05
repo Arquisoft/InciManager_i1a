@@ -57,7 +57,6 @@ public class AgentInfoService {
 	
 	public HttpStatus getResponseStatus(String url, HttpMethod method, HttpEntity<String> entity) {
 		ResponseEntity<String> response = new RestTemplate().exchange(url, method, entity, String.class);
-		
-		return response.getStatusCode();
+        return response.getStatusCode();
 	}
 }

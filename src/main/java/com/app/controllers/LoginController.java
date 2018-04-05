@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.app.entities.AgentInfo;
+import com.app.services.AgentInfoService;
 import com.app.validator.AgentInfoValidator;
 
 @Controller
@@ -16,6 +17,9 @@ public class LoginController {
 	
 	@Autowired
 	private AgentInfoValidator agentInfoValidator;
+	
+	@Autowired
+	private AgentInfoService agentInfoService;
 	
 	@RequestMapping(value = "/")
 	public String login(Model model) {
@@ -27,9 +31,10 @@ public class LoginController {
 	public String login(@Validated AgentInfo agentInfo, BindingResult result, Model model) {
 
 		agentInfoValidator.validate(agentInfo, result);
-		if (result.hasErrors()) {
+		if (result.hasErrors() || !agentInfoService.verifyAgent(agentInfo)) {
 			return "login";
 		}
+		
 		return "redirect:/create/" + agentInfo.getId();
 	}
 
