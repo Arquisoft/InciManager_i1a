@@ -28,6 +28,15 @@ public class AgentInfoService {
 	
 	@Autowired
 	private AgentInfoRepository agentInfoRepository;
+	
+	public AgentInfo findById(String id) {
+		return agentInfoRepository.findById(id);
+	}
+
+	public String getLocation(AgentInfo agentInfo) {
+		// TODO
+		return "";
+	}
 		
 	public boolean verifyAgent(AgentInfo agentInfo) {
 		HttpStatus response;
