@@ -28,30 +28,46 @@ public class IncidentValidator implements Validator {
         ValidationUtils.rejectIfEmptyOrWhitespace(errors, "tags", "error.empty");
         ValidationUtils.rejectIfEmptyOrWhitespace(errors, "topic", "error.empty");
         
-        parseAditionalProperties(incident);
-		parseLocation(incident);
+        parseAditionalProperties(incident,errors);
+		parseLocation(incident,errors);
 
        
     }
     
-    private void parseLocation(Incident incident) {
+	private void parseLocation(Incident incident, Errors errors) {
 
-		if (incident.getLocationString() != null && !incident.getLocationString().isEmpty()) {
+		if (incident.getLocationString() != null && !incident.getLocationString().isEmpty() && incident.getLocationString().contains(",")) {
 			String[] location = incident.getLocationString().trim().split(",");
 			incident.setLocation(new LatLng(Double.parseDouble(location[0]), Double.parseDouble(location[1])));
+		}
+		else {
+			errors.rejectValue("locationString", "error.location");
 		}
 
 	}
 
-	private void parseAditionalProperties(Incident incident) {
-		if (incident.getAditionalPropertiesString() != null && !incident.getAditionalProperties().isEmpty()) {
-			String[] aditionalProperties = incident.getAditionalPropertiesString().trim().split(",");
-			Map<String, String> result = new HashMap<String, String>();
-			for (int i = 0; i < aditionalProperties.length; i++) {
-				String[] pv = aditionalProperties[i].split("/");
-				result.put(pv[0], pv[1]);
+	private void parseAditionalProperties(Incident incident, Errors errors) {
+		if (incident.getAditionalPropertiesString() != null && !incident.getAditionalPropertiesString().isEmpty()) {
+			if( incident.getAditionalPropertiesString().contains(",")) {
+				String[] aditionalProperties = incident.getAditionalPropertiesString().trim().split(",");
+				Map<String, String> result = new HashMap<String, String>();
+				for (int i = 0; i < aditionalProperties.length; i++) {
+					if(aditionalProperties[i].contains("/")) {
+						String[] pv = aditionalProperties[i].split("/");
+						result.put(pv[0], pv[1]);
+					}
+					else {
+						errors.rejectValue("aditionalPropertiesString", "error.aditionalProperties");
+					}
+
+					
+				}
+				incident.setAditionalProperties(result);
 			}
-			incident.setAditionalProperties(result);
+			else {
+				errors.rejectValue("aditionalPropertiesString", "error.aditionalProperties");
+			}
+			
 		} else {
 			incident.setAditionalProperties(new HashMap<String, String>());
 

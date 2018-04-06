@@ -8,13 +8,13 @@ import org.springframework.validation.ValidationUtils;
 import org.springframework.validation.Validator;
 
 import com.app.entities.Agent;
-import com.app.services.AgentService;
+import com.app.services.AgentInfoService;
 
 @Component
 public class AgentInfoValidator implements Validator {
 
 	@Autowired
-	private AgentService agentInfoService;
+	private AgentInfoService agentInfoService;
 
 	@Override
 	public boolean supports(Class<?> aClass) {
@@ -30,7 +30,7 @@ public class AgentInfoValidator implements Validator {
 			errors.rejectValue("kind", "error.kind");
 
 		if (!agentInfo.getId().equals("") || !agentInfo.getPassword().equals("") || agentInfo.getKind() != 0) {
-			Agent posibleAgent = agentInfoService.findById(agentInfo.getId());
+			Agent posibleAgent = agentInfoService.findById(agentInfo);
 			if (posibleAgent == null) {
 				errors.rejectValue("id", "error.user.identification");
 			} else if (!posibleAgent.getPassword().equals(agentInfo.getPassword())) {
