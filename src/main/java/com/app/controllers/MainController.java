@@ -3,6 +3,7 @@ package com.app.controllers;
 import javax.servlet.http.HttpSession;
 import java.util.Date;
 
+import com.app.services.IncidentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -25,6 +26,9 @@ public class MainController {
 	private TopicsService topicsService;
 
 	@Autowired
+	private IncidentService incidentService;
+
+	@Autowired
 	private KafkaIncidentProducer kafkaIncidentProducer;
 	
 	@Autowired
@@ -39,6 +43,7 @@ public class MainController {
 			i.setAgent(agentInfo);
 			model.addAttribute("incident", i);
 			model.addAttribute("topics", topicsService.getTopics());
+			model.addAttribute("incidentService",incidentService.getIncidentsByAgent(agentInfo));
 			return "create";
 		}
 		else return "redirect:/login";
@@ -54,6 +59,7 @@ public class MainController {
 		}
 		incident.setAgent((Agent) session.getAttribute("agent"));
 		incident.setDate(new Date());
+		incidentService.saveIncident(incident);
 		kafkaIncidentProducer.send(incident);
 		return "send";
 
