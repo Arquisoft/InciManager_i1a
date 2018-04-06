@@ -43,7 +43,7 @@ public class MainController {
 			i.setAgent(agentInfo);
 			model.addAttribute("incident", i);
 			model.addAttribute("topics", topicsService.getTopics());
-			model.addAttribute("incidentService",incidentService.getIncidentsByAgent(agentInfo));
+			model.addAttribute("incidentsList",incidentService.getIncidentsByAgent(agentInfo));
 			return "create";
 		}
 		else return "redirect:/login";
