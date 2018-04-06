@@ -37,11 +37,6 @@ public class AgentInfoService {
         return response;
 	}
 
-	public String getLocation(Agent agentInfo) {
-		// TODO
-		return "";
-	}
-		
 	public boolean verifyAgent(Agent agentInfo) {
 		HttpStatus response;
 		
