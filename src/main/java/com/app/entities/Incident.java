@@ -8,7 +8,9 @@ import java.util.Map;
 import com.app.entities.Operator;
 
 import com.app.utils.LatLng;
+import org.springframework.data.mongodb.core.mapping.Document;
 
+@Document(collection= "manager_incident_collection")
 public class Incident {
 
 	private Agent agent;
