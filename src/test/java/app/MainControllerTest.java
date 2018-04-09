@@ -28,7 +28,7 @@ import com.app.MainApplication;
 
 @SuppressWarnings("deprecation")
 @RunWith(SpringJUnit4ClassRunner.class)
-@SpringApplicationConfiguration(classes = MainApplication.class)
+@SpringApplicationConfiguration(classes = {MainApplication.class})
 @WebAppConfiguration
 @IntegrationTest({"server.port=0"})
 public class MainControllerTest {
@@ -52,7 +52,7 @@ public class MainControllerTest {
 	}
 	
 	@Test
-	public void create() throws Exception {
+	public void createIncorrect() throws Exception {
 		template.getForEntity(base.toString(), String.class);
 		String message = mockMvc.perform(get("/create/8"))
 				.andExpect(status().is3xxRedirection())
@@ -68,14 +68,14 @@ public class MainControllerTest {
 		assertNull( message );
 	}
 
-	@Test
-	@WithMockUser
-	public void sendCorrect() throws Exception {
-		String message = mockMvc.perform(get("/send"))
-				.andExpect(status().isOk())
-				.andExpect(content().string(containsString("Incident sent correctly!")))
-				.andReturn().getResponse().getErrorMessage();
-		assertNull( message );
-	}
+//	@Test
+//	@WithMockUser
+//	public void sendCorrect() throws Exception {
+//		String message = mockMvc.perform(get("/send"))
+//				.andExpect(status().isOk())
+//				.andExpect(content().string(containsString("Incident sent correctly!")))
+//				.andReturn().getResponse().getErrorMessage();
+//		assertNull( message );
+//	}
 	
 }

@@ -28,7 +28,7 @@ public class AgentInfoService {
 			request.put("kind", agentInfo.getKind());
 
 			HttpEntity<String> entity = new HttpEntity<String>(request.toString(), header);
-			response = this.getResponseAgentInfo("http://localhost:8080/restAgentInfo", HttpMethod.POST, entity);
+			response = this.getResponseAgentInfo("https://agent-i1a.herokuapp.com/restAgentInfo", HttpMethod.POST, entity);
 		
 		} catch (Exception e) {
 			return null;
@@ -55,7 +55,7 @@ public class AgentInfoService {
 			request.put("kind", agentInfo.getKind());
 
 			HttpEntity<String> entity = new HttpEntity<String>(request.toString(), header);
-			response = this.getResponseStatus("http://localhost:8080/restLogin", HttpMethod.POST, entity);
+			response = this.getResponseStatus("https://agent-i1a.herokuapp.com/restLogin", HttpMethod.POST, entity);
 		
 		} catch (Exception e) {
 			return false;
