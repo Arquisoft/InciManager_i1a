@@ -218,6 +218,11 @@ public class EntitiesTest {
 		Operator operator2 = new Operator();
 		assertEquals("Operator [id='null', username='null', password='null', incidents='[]']", operator2.toString());
 		
+		Long id1 = (long) 1;
+		operator1.setId(id1);
+		assertNotNull(operator1.getId());
+		assertTrue(id1.equals(operator1.getId()));
+		
 		String username2 = "Operator2";
 		operator2.setUsername(username2);
 		assertNotNull(operator2.getUsername());

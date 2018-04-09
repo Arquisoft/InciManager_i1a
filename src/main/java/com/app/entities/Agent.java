@@ -1,6 +1,7 @@
 package com.app.entities;
 
 import java.util.Objects;
+import java.util.Set;
 
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
@@ -17,6 +18,8 @@ public class Agent {
 	private String location;
 	private String id;
 	private int kind;
+	private Set<Incident> incidents;
+	
 
 	public Agent() {
 	}
@@ -47,7 +50,7 @@ public class Agent {
 	public String getPassword() {
 		return password;
 	}
-
+	
 	public void setPassword(String pw) {
 		this.password = pw;
 	}
@@ -90,6 +93,18 @@ public class Agent {
 
 	public void setKind(int kind) {
 		this.kind = kind;
+	}
+	
+	public Set<Incident> getIncidents() {
+		return incidents;
+	}
+	
+	public void addIncident(Incident inc) {
+		this.incidents.add(inc);
+	}
+	
+	public void setIncidents(Set<Incident> incidents) {
+		this.incidents = incidents;
 	}
 
 	@Override
