@@ -3,6 +3,7 @@ package app;
 import static org.hamcrest.Matchers.containsString;
 import static org.junit.Assert.assertNull;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -16,7 +17,6 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.IntegrationTest;
 import org.springframework.boot.test.SpringApplicationConfiguration;
 import org.springframework.boot.test.TestRestTemplate;
-import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.test.web.servlet.MockMvc;
@@ -31,8 +31,8 @@ import com.app.MainApplication;
 @SpringApplicationConfiguration(classes = MainApplication.class)
 @WebAppConfiguration
 @IntegrationTest({"server.port=0"})
-public class MainControllerTest {
-
+public class LoginControllerTest {
+	
 	@Value("${local.server.port}")
 	private int port;
 
@@ -43,37 +43,34 @@ public class MainControllerTest {
 
 	@Autowired
 	private WebApplicationContext context;
-	
+
 	@Before
 	public void setUp() throws Exception {
-		this.base = new URL("http://localhost:" + port);
+		this.base = new URL("http://localhost:" + port + "/login");
 		template = new TestRestTemplate();
 		mockMvc = MockMvcBuilders.webAppContextSetup(context).build();
 	}
 	
 	@Test
-	public void create() throws Exception {
+	public void getLanding() throws Exception {
 		template.getForEntity(base.toString(), String.class);
-		String message = mockMvc.perform(get("/create/8"))
-				.andExpect(status().is3xxRedirection())
-				.andReturn().getResponse().getErrorMessage();
-		assertNull(message);
-	}
-
-	@Test
-	public void sendIncorrect() throws Exception {
-		String message = mockMvc.perform(get("/send"))
-				.andExpect(status().is3xxRedirection())
+		String message = mockMvc.perform(get("/"))
+				.andExpect(status().isOk())
+				.andExpect(content().string(containsString("Log in")))
+				.andExpect(content().string(containsString("Username:")))
+				.andExpect(content().string(containsString("Password:")))
+				.andExpect(content().string(containsString("Kind:")))
 				.andReturn().getResponse().getErrorMessage();
 		assertNull( message );
 	}
 
 	@Test
-	@WithMockUser
-	public void sendCorrect() throws Exception {
-		String message = mockMvc.perform(get("/send"))
-				.andExpect(status().isOk())
-				.andExpect(content().string(containsString("Incident sent correctly!")))
+	public void loginCorrecto() throws Exception {
+		String message = mockMvc.perform(post("/login")
+				.param("id", "8")
+				.param("password", "lucia123")
+				.param("kind","1"))
+				.andExpect(status().is3xxRedirection())
 				.andReturn().getResponse().getErrorMessage();
 		assertNull( message );
 	}

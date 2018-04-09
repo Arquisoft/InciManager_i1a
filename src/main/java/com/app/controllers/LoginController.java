@@ -23,7 +23,7 @@ public class LoginController {
 	@Autowired
 	private AgentInfoService agentInfoService;
 	
-	@RequestMapping(value = "/")
+	@RequestMapping(value = {"/", "", "/login"})
 	public String login(Model model) {
 		model.addAttribute("agent", new Agent());
 		return "login";
