@@ -52,16 +52,6 @@ public class MainControllerTest {
 		mockMvc = MockMvcBuilders.webAppContextSetup(context).build();
 	}
 	
-	private void login() throws Exception {
-		String message = mockMvc.perform(post("/login")
-				.param("id", "8")
-				.param("password", "lucia123")
-				.param("kind","1"))
-				.andExpect(status().is3xxRedirection())
-				.andReturn().getResponse().getErrorMessage();
-		assertNull( message );
-	}
-	
 	@Test
 	public void create() throws Exception {
 		template.getForEntity(base.toString(), String.class);
@@ -70,7 +60,13 @@ public class MainControllerTest {
 				.andReturn().getResponse().getErrorMessage();
 		assertNull(message);
 	
-		login();
+		message = mockMvc.perform(post("/login")
+				.param("id", "8")
+				.param("password", "lucia123")
+				.param("kind","1"))
+				.andExpect(status().is3xxRedirection())
+				.andReturn().getResponse().getErrorMessage();
+		assertNull( message );
 		
 		message = mockMvc.perform(get("/create/8"))
 				.andExpect(status().isOk())
@@ -89,7 +85,13 @@ public class MainControllerTest {
 				.andReturn().getResponse().getErrorMessage();
 		assertNull( message );
 		
-		login();
+		message = mockMvc.perform(post("/login")
+				.param("id", "8")
+				.param("password", "lucia123")
+				.param("kind","1"))
+				.andExpect(status().is3xxRedirection())
+				.andReturn().getResponse().getErrorMessage();
+		assertNull( message );
 		
 		message = mockMvc.perform(get("/send"))
 				.andExpect(status().isOk())
