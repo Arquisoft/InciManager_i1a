@@ -85,11 +85,11 @@ public class EntitiesTest {
 
         assertEquals("Agent [idautogenerado='null', name='name'" +
                 ", email='mail@mail.com', password='password', location='', id='10203040A'" +
-                ", kind=1]", user.toString());
+                ", kind=1, incidents='[]']", user.toString());
 
         assertEquals("Agent [idautogenerado='null', name='name'" +
                 ", email='mail@mail.com', password='password', location='caceres', id='10203040A'" +
-                ", kind=1]", user2.toString());
+                ", kind=1, incidents='[]']", user2.toString());
 
         assertFalse(user.hashCode() == user2.hashCode());
         assertFalse(user.equals(user2));
@@ -107,9 +107,25 @@ public class EntitiesTest {
         user.setKind(2);
         assertFalse(user.getKind() == kind);
         
-        assertEquals("Agent [idautogenerado='null', name=''" +
-                ", email='', password='', location='Málaga', id=''" +
-                ", kind=2]", user.toString());
+        List<Incident> incidents = new ArrayList<Incident>();
+        incidents.add(new Incident());
+        incidents.add(new Incident());
+        user.setIncidents(incidents);
+        assertNotNull(user.getIncidents());
+        assertTrue(user.getIncidents().size() == 2  );
+        
+        assertEquals("Agent [idautogenerado='null', name='',"
+        		+ " email='', password='', location='Málaga', id='',"
+        		+ " kind=2, incidents='[Incident [agent='null', incidentName='null', "
+                + "description='null', tags='[]', operator='null', topic='null',"
+                + " locationString='null', location='null', date='null', aditionalProperties='{}',"
+                + " aditionalPropertiesString='null', status='null'], Incident [agent='null',"
+                + " incidentName='null', description='null', tags='[]', operator='null',"
+                + " topic='null', locationString='null', location='null', date='null',"
+                + " aditionalProperties='{}', aditionalPropertiesString='null', status='null']]']", user.toString());
+        
+        user.addIncident(new Incident());
+        assertTrue(user.getIncidents().size() == 3 );
 
         assertFalse(user.equals(null));
         assertTrue(user.equals(user));
@@ -238,7 +254,9 @@ public class EntitiesTest {
 		operator2.setIncidents(incidents);
 		assertNotNull(operator2.getIncidents());
 		assertTrue(incidents.equals(operator2.getIncidents()));
-		assertTrue(operator2.getIncidents().size() == incidents.size());
+		assertTrue(operator2.getIncidents().size() == 2);
+		operator2.addIncident(new Incident());
+		assertTrue(operator2.getIncidents().size() == 3 );
 		
 		assertFalse(operator1.equals(null));
 		assertTrue(operator1.equals(operator1));

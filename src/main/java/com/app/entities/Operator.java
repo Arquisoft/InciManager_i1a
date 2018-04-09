@@ -49,6 +49,10 @@ public class Operator {
 		return incidents;
 	}
 
+	public void addIncident(Incident inc) {
+		this.incidents.add(inc);
+	}
+	
 	public void setIncidents(List<Incident> incidents) {
 		this.incidents = incidents;
 	}

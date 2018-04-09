@@ -1,5 +1,7 @@
 package com.app.entities;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 import org.springframework.data.annotation.Id;
@@ -17,6 +19,8 @@ public class Agent {
 	private String location;
 	private String id;
 	private int kind;
+	
+	private List<Incident> incidents = new ArrayList<Incident>();
 
 	public Agent() {
 	}
@@ -92,11 +96,23 @@ public class Agent {
 		this.kind = kind;
 	}
 
+	public List<Incident> getIncidents() {
+		return incidents;
+	}
+	
+	public void addIncident(Incident inc) {
+		this.incidents.add(inc);
+	}
+	
+	public void setIncidents(List<Incident> incidents) {
+		this.incidents = incidents;
+	}
+	
 	@Override
 	public String toString() {
 		return "Agent [idautogenerado='" + idautogenerado + "', name='" + name + "', email='"
 				+ email + "', password='" + password + "', location='" + location + "', id='" + id
-				+ "', kind=" + kind + "]";
+				+ "', kind=" + kind + ", incidents='" + incidents + "']";
 	}
 
 	@Override
