@@ -3,9 +3,7 @@ package app;
 import static org.hamcrest.Matchers.containsString;
 import static org.junit.Assert.assertNull;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.model;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import java.net.URL;
@@ -18,6 +16,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.IntegrationTest;
 import org.springframework.boot.test.SpringApplicationConfiguration;
 import org.springframework.boot.test.TestRestTemplate;
+import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.test.web.servlet.MockMvc;
@@ -62,25 +61,21 @@ public class MainControllerTest {
 	}
 
 	@Test
-	public void send() throws Exception {
+	public void sendIncorrect() throws Exception {
 		String message = mockMvc.perform(get("/send"))
 				.andExpect(status().is3xxRedirection())
 				.andReturn().getResponse().getErrorMessage();
 		assertNull( message );
-		
-		message = mockMvc.perform(post("/login")
-				.param("id", "8")
-				.param("password", "lucia123")
-				.param("kind","1"))
-				.andExpect(status().is3xxRedirection())
-				.andReturn().getResponse().getErrorMessage();
-		assertNull( message );
-		
-		message = mockMvc.perform(get("/send"))
+	}
+
+	@Test
+	@WithMockUser
+	public void sendCorrect() throws Exception {
+		String message = mockMvc.perform(get("/send"))
 				.andExpect(status().isOk())
 				.andExpect(content().string(containsString("Incident sent correctly!")))
 				.andReturn().getResponse().getErrorMessage();
 		assertNull( message );
 	}
-
+	
 }
