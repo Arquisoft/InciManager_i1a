@@ -59,23 +59,6 @@ public class MainControllerTest {
 				.andExpect(status().is3xxRedirection())
 				.andReturn().getResponse().getErrorMessage();
 		assertNull(message);
-	
-		message = mockMvc.perform(post("/login")
-				.param("id", "8")
-				.param("password", "lucia123")
-				.param("kind","1"))
-				.andExpect(status().is3xxRedirection())
-				.andReturn().getResponse().getErrorMessage();
-		assertNull( message );
-		
-		message = mockMvc.perform(get("/create/8"))
-				.andExpect(status().isOk())
-				.andExpect(content().string(containsString("")))
-				.andExpect(model().attributeExists("incident", "topics"))
-				.andExpect(model().errorCount(0))
-				//				.andExpect(model().attribute("incident", Incident.class))
-				.andReturn().getResponse().getErrorMessage();
-		assertNull(message);
 	}
 
 	@Test
