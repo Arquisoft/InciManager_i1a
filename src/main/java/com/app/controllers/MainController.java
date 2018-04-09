@@ -40,7 +40,7 @@ public class MainController {
 		Agent agentInfo = (Agent) session.getAttribute("agent");
 		if(agentInfo != null) {
 			Incident i = new Incident();
-			i.setAgent(agentInfo);
+			i.setAgent(agentInfo.getIdautogenerado());
 			model.addAttribute("incident", i);
 			model.addAttribute("topics", topicsService.getTopics());
 			model.addAttribute("incidentsList",incidentService.getIncidentsByAgent(agentInfo));
@@ -57,7 +57,7 @@ public class MainController {
 			model.addAttribute("topics", topicsService.getTopics());
 			return "create";
 		}
-		incident.setAgent((Agent) session.getAttribute("agent"));
+		incident.setAgent(((Agent)session.getAttribute("agent")).getIdautogenerado());
 		incident.setDate(new Date());
 		incidentService.saveIncident(incident);
 		kafkaIncidentProducer.send(incident);

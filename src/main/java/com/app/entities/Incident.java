@@ -8,12 +8,16 @@ import java.util.Map;
 import com.app.entities.Operator;
 
 import com.app.utils.LatLng;
+import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 @Document(collection= "manager_incident_collection")
 public class Incident {
 
-	private Agent agent;
+	@Id
+	private String idautogenerado;
+
+	private String agent;
 	private String incidentName;
 	private String description;
 	private List<String> tags = new ArrayList<String>();;
@@ -34,11 +38,11 @@ public class Incident {
 
 	}
 
-	public Agent getAgent() {
+	public String getAgent() {
 		return agent;
 	}
 
-	public void setAgent(Agent agent) {
+	public void setAgent(String agent) {
 		this.agent = agent;
 	}
 

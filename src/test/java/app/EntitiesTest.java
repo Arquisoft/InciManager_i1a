@@ -143,9 +143,9 @@ public class EntitiesTest {
 		
 		
 		agent.setName("Tester");
-		incident.setAgent(agent);
+		incident.setAgent(agent.getIdautogenerado());
 		assertNotNull(incident.getAgent());
-		assertTrue(agent.equals(incident.getAgent()));
+		assertTrue(agent.getIdautogenerado().equals(incident.getAgent()));
 		
 		incident.setIncidentName(incidentName);
 		assertNotNull(incident.getIncidentName());

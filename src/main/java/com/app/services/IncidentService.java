@@ -16,6 +16,6 @@ public class IncidentService {
     }
 
     public List<Incident> getIncidentsByAgent(Agent agent){
-        return incidentRepository.findByAgent(agent);
+        return incidentRepository.findByAgentID(agent.getIdautogenerado());
     }
 }
