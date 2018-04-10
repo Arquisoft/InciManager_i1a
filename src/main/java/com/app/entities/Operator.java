@@ -1,9 +1,13 @@
 package com.app.entities;
 
+import org.springframework.data.annotation.Id;
+
 import java.util.ArrayList;
 import java.util.List;
 
 public class Operator {
+
+	private String idautogenerado;
 
 	private Long id;
 
@@ -19,6 +23,10 @@ public class Operator {
 
 	public Operator() {
 
+	}
+
+	public String getIdautogenerado() {
+		return idautogenerado;
 	}
 
 	public Long getId() {

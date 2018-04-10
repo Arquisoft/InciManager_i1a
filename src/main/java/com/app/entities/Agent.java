@@ -19,8 +19,6 @@ public class Agent {
 	private String location;
 	private String id;
 	private int kind;
-	
-	private List<Incident> incidents = new ArrayList<Incident>();
 
 	public Agent() {
 	}
@@ -96,23 +94,12 @@ public class Agent {
 		this.kind = kind;
 	}
 
-	public List<Incident> getIncidents() {
-		return incidents;
-	}
-	
-	public void addIncident(Incident inc) {
-		this.incidents.add(inc);
-	}
-	
-	public void setIncidents(List<Incident> incidents) {
-		this.incidents = incidents;
-	}
 	
 	@Override
 	public String toString() {
 		return "Agent [idautogenerado='" + idautogenerado + "', name='" + name + "', email='"
 				+ email + "', password='" + password + "', location='" + location + "', id='" + id
-				+ "', kind=" + kind + ", incidents='" + incidents + "']";
+				+ "', kind=" + kind + "']";
 	}
 
 	@Override

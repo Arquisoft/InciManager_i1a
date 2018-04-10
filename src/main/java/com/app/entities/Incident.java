@@ -8,8 +8,14 @@ import java.util.Map;
 import com.app.entities.Operator;
 
 import com.app.utils.LatLng;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
 
+@Document(collection = "incident_i1a_collection")
 public class Incident {
+
+	@Id
+	private String idautogenerado;
 
 	private Agent agent;
 	private String incidentName;
@@ -30,6 +36,10 @@ public class Incident {
 
 	public Incident() {
 
+	}
+
+	public String getIdautogenerado() {
+		return idautogenerado;
 	}
 
 	public Agent getAgent() {
