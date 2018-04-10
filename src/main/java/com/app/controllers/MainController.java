@@ -3,6 +3,7 @@ package com.app.controllers;
 import javax.servlet.http.HttpSession;
 import java.util.Date;
 
+import com.app.services.IncidentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -30,6 +31,9 @@ public class MainController {
 	@Autowired
 	private IncidentValidator incidentValidator;
 
+	@Autowired
+	private IncidentService incidentService;
+
 
 	@RequestMapping(value = "/create/{id}")
 	public String create(Model model, @PathVariable("id") Long id, HttpSession session) {
@@ -39,6 +43,7 @@ public class MainController {
 			i.setAgent(agentInfo);
 			model.addAttribute("incident", i);
 			model.addAttribute("topics", topicsService.getTopics());
+			model.addAttribute("incidentsList",incidentService.getIncidentsByAgent(agentInfo));
 			return "create";
 		}
 		else return "redirect:/login";
@@ -46,14 +51,15 @@ public class MainController {
 
 	@RequestMapping(value = "/create", method = RequestMethod.POST)
 	public String createPost(Model model, @ModelAttribute Incident incident,BindingResult result,
-			HttpSession session) {
+							 HttpSession session) {
 		incidentValidator.validate(incident, result);
 		if (result.hasErrors()) {
 			model.addAttribute("topics", topicsService.getTopics());
 			return "create";
 		}
-		incident.setAgent((Agent) session.getAttribute("agent"));
+		incident.setAgent((Agent)session.getAttribute("agent"));
 		incident.setDate(new Date());
+		incidentService.saveIncident(incident);
 		kafkaIncidentProducer.send(incident);
 		return "send";
 
