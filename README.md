@@ -2,7 +2,6 @@
 [![Build Status](https://travis-ci.org/Arquisoft/InciManager_i1a.svg?branch=master)](https://travis-ci.org/Arquisoft/InciManager_i1a)
 [![codecov](https://codecov.io/gh/Arquisoft/InciManager_i1a/branch/master/graph/badge.svg)](https://codecov.io/gh/Arquisoft/InciManager_i1a)
 
-
 # InciManager_i1a
 
 # Authors

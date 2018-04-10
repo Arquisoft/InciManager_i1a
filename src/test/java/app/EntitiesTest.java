@@ -3,6 +3,7 @@ package app;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 
 import java.net.URL;
@@ -64,7 +65,7 @@ public class EntitiesTest {
         assertTrue(user.getId().equals(NIF));
         assertTrue(user.getEmail().equals(email));
         assertTrue(user.getLocation().equals(""));
-        assertTrue(user.getIdautogenerado() == null);
+        assertNull(user.getIdautogenerado());
         assertTrue(user.getKind() == 1);
 
         assertTrue(user2.getName().equals(name));
@@ -72,7 +73,7 @@ public class EntitiesTest {
         assertTrue(user2.getId().equals(NIF));
         assertTrue(user2.getEmail().equals(email));
         assertTrue(user2.getLocation().equals(location));
-        assertTrue(user2.getIdautogenerado() == null);
+        assertNull(user2.getIdautogenerado());
         assertTrue(user2.getKind() == 1);
         
         assertTrue(user3.getName().equals(name));
@@ -80,7 +81,7 @@ public class EntitiesTest {
         assertTrue(user3.getId().equals(NIF));
         assertTrue(user3.getEmail().equals(email));
         assertTrue(user3.getLocation().equals(location));
-        assertTrue(user3.getIdautogenerado() == null);
+        assertNull(user3.getIdautogenerado());
         assertTrue(user3.getKind() == 1);
 
         assertEquals("Agent [idautogenerado='null', name='name'" +
@@ -127,7 +128,7 @@ public class EntitiesTest {
 //        user.addIncident(new Incident());
 //        assertTrue(user.getIncidents().size() == 3 );
 
-        assertFalse(user.equals(null));
+        assertNotNull(user);
         assertTrue(user.equals(user));
         assertFalse(user.hashCode() == user2.hashCode());
         assertFalse(user.equals(user2));
@@ -139,7 +140,7 @@ public class EntitiesTest {
 		Agent agent = new Agent();
 		String incidentName = "IncidentTest";
 		String description = "IncidentTest description";
-		List<String> tags = new ArrayList<String>();;
+		List<String> tags = new ArrayList<String>();
 		Operator operator = new Operator(); 
 		String topic = "Esto es una prueba";
 		String locationString = "43.354872,-5.8513731";
@@ -214,7 +215,7 @@ public class EntitiesTest {
 		assertNotNull(incident.getStatus());
 		assertTrue(status.equals(incident.getStatus()));
 
-		assertFalse(incident.equals(null));
+		assertNotNull(incident);
 		assertTrue(incident.equals(incident));
 		
 		Incident incident2 = new Incident();
@@ -258,7 +259,7 @@ public class EntitiesTest {
 //		operator2.addIncident(new Incident());
 //		assertTrue(operator2.getIncidents().size() == 3 );
 		
-		assertFalse(operator1.equals(null));
+		assertNotNull(operator1);
 		assertTrue(operator1.equals(operator1));
 		
 		assertFalse(operator1.hashCode() == operator2.hashCode());
