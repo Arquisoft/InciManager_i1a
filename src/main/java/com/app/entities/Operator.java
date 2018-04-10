@@ -14,8 +14,6 @@ public class Operator {
 	private String username;
 	private String password;
 
-	private List<Incident> incidents = new ArrayList<Incident>();
-
 	public Operator(String username, String password) {
 		this.username = username;
 		this.password = password;
@@ -53,22 +51,9 @@ public class Operator {
 		this.password = password;
 	}
 
-	public List<Incident> getIncidents() {
-		return incidents;
-	}
-
-	public void addIncident(Incident inc) {
-		this.incidents.add(inc);
-	}
-	
-	public void setIncidents(List<Incident> incidents) {
-		this.incidents = incidents;
-	}
-
 	@Override
 	public String toString() {
-		return "Operator [id='" + id + "', username='" + username + "', password='" + password + "', incidents='" + incidents
-				+ "']";
+		return "Operator [id='" + id + "', username='" + username + "', password='" + password + "']";
 	}
 	
 }
