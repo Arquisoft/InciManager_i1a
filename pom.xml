@@ -3,9 +3,9 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 
-	<groupId>es.uniovi.asw</groupId>
-	<artifactId>participationSystem0</artifactId>
-	<name>participationSystem0</name>
+	<groupId>es.uniovi</groupId>
+	<artifactId>InciManager_i1a</artifactId>
+	<name>InciManager_i1a</name>
 	<version>0.0.1</version>
 
 	<parent>

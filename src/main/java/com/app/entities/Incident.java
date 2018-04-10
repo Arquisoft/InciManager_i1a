@@ -28,9 +28,6 @@ public class Incident {
 		OPEN, IN_PROCESS, CLOSED, CANCELLED
 	};
 
-	public Incident() {
-
-	}
 
 	public Agent getAgent() {
 		return agent;
