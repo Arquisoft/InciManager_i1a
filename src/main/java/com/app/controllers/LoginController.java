@@ -34,7 +34,7 @@ public class LoginController {
 			HttpSession session) {
 
 		agentInfoValidator.validate(agent, result);
-		if (!agentInfoService.verifyAgent(agent) || result.hasErrors()) {
+		if (!agentInfoService.verifyAgent(agent) && result.hasErrors()) {
 			return "login";
 		}
 		
