@@ -1,10 +1,5 @@
 package com.app.entities;
 
-import org.springframework.data.annotation.Id;
-
-import java.util.ArrayList;
-import java.util.List;
-
 public class Operator {
 
 	private String idautogenerado;

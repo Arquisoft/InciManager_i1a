@@ -59,18 +59,14 @@ public class IncidentValidator implements Validator {
 					else {
 						errors.rejectValue("aditionalPropertiesString", "error.aditionalProperties");
 					}
-
-					
 				}
 				incident.setAditionalProperties(result);
 			}
 			else {
 				errors.rejectValue("aditionalPropertiesString", "error.aditionalProperties");
 			}
-			
 		} else {
 			incident.setAditionalProperties(new HashMap<String, String>());
-
 		}
 
 	}

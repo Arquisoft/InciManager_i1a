@@ -32,12 +32,9 @@ import com.app.MainApplication;
 @WebAppConfiguration
 @IntegrationTest({"server.port=0"})
 public class LoginControllerTest {
-	
+
 	@Value("${local.server.port}")
 	private int port;
-
-	private URL base;
-	private RestTemplate template;
 
 	private MockMvc mockMvc;
 
@@ -46,14 +43,14 @@ public class LoginControllerTest {
 
 	@Before
 	public void setUp() throws Exception {
-		this.base = new URL("http://localhost:" + port + "/login");
-		template = new TestRestTemplate();
+		URL base = new URL("http://localhost:" + port + "/login");
+		RestTemplate template = new TestRestTemplate();
+		template.getForEntity(base.toString(), String.class);
 		mockMvc = MockMvcBuilders.webAppContextSetup(context).build();
 	}
-	
+
 	@Test
 	public void getLanding() throws Exception {
-		template.getForEntity(base.toString(), String.class);
 		String message = mockMvc.perform(get("/"))
 				.andExpect(status().isOk())
 				.andExpect(content().string(containsString("Log in")))
@@ -74,5 +71,5 @@ public class LoginControllerTest {
 				.andReturn().getResponse().getErrorMessage();
 		assertNull( message );
 	}
-	
+
 }
