@@ -99,7 +99,7 @@ public class Agent {
 	public String toString() {
 		return "Agent [idautogenerado='" + idautogenerado + "', name='" + name + "', email='"
 				+ email + "', password='" + password + "', location='" + location + "', id='" + id
-				+ "', kind=" + kind + "']";
+				+ "', kind=" + kind + "]";
 	}
 
 	@Override
