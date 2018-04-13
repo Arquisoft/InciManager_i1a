@@ -37,9 +37,6 @@ public class MainControllerTest {
 	@Value("${local.server.port}")
 	private int port;
 
-	private URL base;
-	private RestTemplate template;
-
 	private MockMvc mockMvc;
 	
 	@Autowired
@@ -50,15 +47,14 @@ public class MainControllerTest {
 	
 	@Before
 	public void setUp() throws Exception {
-		this.base = new URL("http://localhost:" + port);
-		template = new TestRestTemplate();
+		URL base = new URL("http://localhost:" + port);
+		RestTemplate template = new TestRestTemplate();
 		template.getForEntity(base.toString(), String.class);
 		mockMvc = MockMvcBuilders.webAppContextSetup(context).build();
 	}
 	
 	@Test
 	public void createIncorrect() throws Exception {
-		template.getForEntity(base.toString(), String.class);
 		String message = mockMvc.perform(get("/create/8"))
 				.andExpect(status().is3xxRedirection())
 				.andReturn().getResponse().getErrorMessage();

@@ -1,7 +1,5 @@
 package com.app.entities;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Objects;
 
 import org.springframework.data.annotation.Id;
@@ -99,7 +97,7 @@ public class Agent {
 	public String toString() {
 		return "Agent [idautogenerado='" + idautogenerado + "', name='" + name + "', email='"
 				+ email + "', password='" + password + "', location='" + location + "', id='" + id
-				+ "', kind=" + kind + "']";
+				+ "', kind=" + kind + "]";
 	}
 
 	@Override
