@@ -41,9 +41,6 @@ public class AgentInfoValidatorTest {
 	@Value("${local.server.port}")
 	private int port;
 
-	private URL base;
-	private RestTemplate template;
-
 	private MockMvc mockMvc;
 	
 	@Autowired
@@ -54,8 +51,8 @@ public class AgentInfoValidatorTest {
 	
 	@Before
 	public void setUp() throws Exception {
-		this.base = new URL("http://localhost:" + port);
-		template = new TestRestTemplate();
+		URL base = new URL("http://localhost:" + port);
+		RestTemplate template = new TestRestTemplate();
 		template.getForEntity(base.toString(), String.class);
 		mockMvc = MockMvcBuilders.webAppContextSetup(context).build();
 	}

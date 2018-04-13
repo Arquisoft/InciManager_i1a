@@ -164,6 +164,8 @@ public class EntitiesTest {
 		assertNotNull(incident.getAgent());
 		assertTrue(agent.equals(incident.getAgent()));
 		
+		assertNull(incident.getIdautogenerado());
+		
 		incident.setIncidentName(incidentName);
 		assertNotNull(incident.getIncidentName());
 		assertTrue(incidentName.equals(incident.getIncidentName()));
@@ -238,6 +240,8 @@ public class EntitiesTest {
 		operator1.setId(id1);
 		assertNotNull(operator1.getId());
 		assertTrue(id1.equals(operator1.getId()));
+		
+		assertNull(operator1.getIdautogenerado());
 		
 		String username2 = "Operator2";
 		operator2.setUsername(username2);

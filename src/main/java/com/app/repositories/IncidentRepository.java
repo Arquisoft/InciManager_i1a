@@ -1,12 +1,12 @@
 package com.app.repositories;
 
-import com.app.entities.Incident;
-import com.app.entities.Agent;
+import java.util.List;
+
 import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.data.mongodb.repository.Query;
 import org.springframework.stereotype.Repository;
-import java.util.List;
 
+import com.app.entities.Incident;
 
 @Repository
 public interface IncidentRepository extends MongoRepository<Incident,Long>{

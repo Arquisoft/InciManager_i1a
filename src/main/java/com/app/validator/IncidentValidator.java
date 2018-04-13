@@ -31,7 +31,6 @@ public class IncidentValidator implements Validator {
         parseAditionalProperties(incident,errors);
 		parseLocation(incident,errors);
 
-       
     }
     
 	private void parseLocation(Incident incident, Errors errors) {
