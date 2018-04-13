@@ -86,11 +86,11 @@ public class EntitiesTest {
 
         assertEquals("Agent [idautogenerado='null', name='name'" +
                 ", email='mail@mail.com', password='password', location='', id='10203040A'" +
-                ", kind=1, incidents='[]']", user.toString());
+                ", kind=1]", user.toString());
 
         assertEquals("Agent [idautogenerado='null', name='name'" +
                 ", email='mail@mail.com', password='password', location='caceres', id='10203040A'" +
-                ", kind=1, incidents='[]']", user2.toString());
+                ", kind=1]", user2.toString());
 
         assertFalse(user.hashCode() == user2.hashCode());
         assertFalse(user.equals(user2));
@@ -156,7 +156,7 @@ public class EntitiesTest {
 		assertEquals("Incident [agent='null', incidentName='null', description='null'"
 				+ ", tags='[]', operator='null', topic='null', locationString='null'"
 				+ ", location='null', date='null', aditionalProperties='{}'"
-				+ ", aditionalPropertiesString='null', status='null']", incident.toString());
+				+ ", aditionalPropertiesString='null', status='OPEN']", incident.toString());
 		
 		
 		agent.setName("Tester");
@@ -227,13 +227,12 @@ public class EntitiesTest {
 	public void testOperator() {
 		String username = "Operator1";
 		String password = "123456";
-		List<Incident> incidents = new ArrayList<Incident>();
 		
 		Operator operator1 = new Operator(username, password);
-		assertEquals("Operator [id='null', username='Operator1', password='123456', incidents='[]']", operator1.toString());
+		assertEquals("Operator [id='null', username='Operator1', password='123456']", operator1.toString());
 		
 		Operator operator2 = new Operator();
-		assertEquals("Operator [id='null', username='null', password='null', incidents='[]']", operator2.toString());
+		assertEquals("Operator [id='null', username='null', password='null']", operator2.toString());
 		
 		Long id1 = (long) 1;
 		operator1.setId(id1);
@@ -249,15 +248,6 @@ public class EntitiesTest {
 		operator2.setPassword(password2);
 		assertNotNull(operator2.getPassword());
 		assertTrue(password2.equals(operator2.getPassword()));
-		
-//		incidents.add(new Incident());
-//		incidents.add(new Incident());
-//		operator2.setIncidents(incidents);
-//		assertNotNull(operator2.getIncidents());
-//		assertTrue(incidents.equals(operator2.getIncidents()));
-//		assertTrue(operator2.getIncidents().size() == 2);
-//		operator2.addIncident(new Incident());
-//		assertTrue(operator2.getIncidents().size() == 3 );
 		
 		assertNotNull(operator1);
 		assertTrue(operator1.equals(operator1));
