@@ -35,8 +35,9 @@ public class MainController {
 	private IncidentService incidentService;
 
 
-	@RequestMapping(value = "/create/{id}")
-	public String create(Model model, @PathVariable("id") Long id, HttpSession session) {
+	@RequestMapping(value = "/create")
+	public String create(Model model, //@PathVariable("id") Long id,
+						 HttpSession session) {
 		Agent agentInfo = (Agent) session.getAttribute("agent");
 		if(agentInfo != null) {
 			Incident i = new Incident();
@@ -48,13 +49,14 @@ public class MainController {
 		}
 		else return "redirect:/login";
 	}
-
 	@RequestMapping(value = "/create", method = RequestMethod.POST)
 	public String createPost(Model model, @ModelAttribute Incident incident,BindingResult result,
 							 HttpSession session) {
 		incidentValidator.validate(incident, result);
 		if (result.hasErrors()) {
 			model.addAttribute("topics", topicsService.getTopics());
+			Agent agentInfo = (Agent) session.getAttribute("agent");
+			model.addAttribute("incidentsList",incidentService.getIncidentsByAgent(agentInfo));
 			return "create";
 		}
 		incident.setAgent((Agent)session.getAttribute("agent"));

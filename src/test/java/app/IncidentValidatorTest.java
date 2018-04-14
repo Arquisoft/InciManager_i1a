@@ -4,12 +4,14 @@ import static org.hamcrest.CoreMatchers.containsString;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import java.net.URL;
 
+import com.app.services.AgentInfoService;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -44,6 +46,9 @@ public class IncidentValidatorTest {
 	private MockMvc mockMvc;
 
 	@Autowired
+	private AgentInfoService agentService;
+
+	@Autowired
 	private WebApplicationContext context;
 
 	@Autowired
@@ -63,11 +68,27 @@ public class IncidentValidatorTest {
 		assertFalse( incidentValidator.supports( Agent.class ) );
 		assertFalse( incidentValidator.supports( Operator.class ) );
 	}
-
+	@Test
+	public void createPostCorrect() throws Exception {
+		String message = mockMvc.perform(post("/create")
+				.param("incidentName","Incendio!!")
+				.param("description", "Fire")
+				.param("locationString", "1.54,5.84")
+				.param("tags", "Fuego")
+				.param("aditionalPropertiesString", "montaña/rocosa, fuego/caliente")
+				.param("topic", "Fuego"))
+				.andExpect(status().isOk())
+				.andExpect(content().string(containsString("Incident sent correctly")))
+				.andReturn().getResponse().toString();
+		assertNotNull(message);
+	}
 	@Test
 	public void createPostIncorrect() throws Exception {
+		Agent origin = new Agent("","","lucia123","8",1);
+		Agent agent = agentService.findById(origin);
+
 		//all empty
-		String message = mockMvc.perform(post("/create")
+		String message = mockMvc.perform(post("/create").sessionAttr("agent", agent)
 				.param("incidentName","")
 				.param("description", "")
 				.param("locationString", "")
@@ -81,7 +102,7 @@ public class IncidentValidatorTest {
 		assertNotNull(message);
 
 		//incident empty
-		message = mockMvc.perform(post("/create")
+		message = mockMvc.perform(post("/create").sessionAttr("agent", agent)
 				.param("incidentName","")
 				.param("description", "Fire")
 				.param("locationString", "1.54,5.84")
@@ -94,7 +115,7 @@ public class IncidentValidatorTest {
 		assertNotNull(message);
 
 		//description empty
-		message = mockMvc.perform(post("/create")
+		message = mockMvc.perform(post("/create").sessionAttr("agent", agent)
 				.param("incidentName","Incendio!!")
 				.param("description", "")
 				.param("locationString", "1.54,5.84")
@@ -107,7 +128,7 @@ public class IncidentValidatorTest {
 		assertNotNull(message);
 
 		//location empty
-		message = mockMvc.perform(post("/create")
+		message = mockMvc.perform(post("/create").sessionAttr("agent", agent)
 				.param("incidentName","Incendio!!")
 				.param("description", "Fire")
 				.param("locationString", "")
@@ -120,7 +141,7 @@ public class IncidentValidatorTest {
 		assertNotNull(message);
 
 		//tags empty
-		message = mockMvc.perform(post("/create")
+		message = mockMvc.perform(post("/create").sessionAttr("agent", agent)
 				.param("incidentName","Incendio!!")
 				.param("description", "Fire")
 				.param("locationString", "1.54,5.84")
@@ -129,6 +150,47 @@ public class IncidentValidatorTest {
 				.andExpect(status().isOk())
 				.andExpect(content().string(containsString("Create incident")))
 				.andExpect(content().string(containsString("This field must not be empty")))
+				.andReturn().getResponse().toString();
+		assertNotNull(message);
+
+		//wrong location
+		message = mockMvc.perform(post("/create").sessionAttr("agent", agent)
+				.param("incidentName","Incendio!!")
+				.param("description", "Fire")
+				.param("locationString", "1.54 5.84")
+				.param("tags", "Fuego")
+				.param("topic", "Fuego"))
+				.andExpect(status().isOk())
+				.andExpect(content().string(containsString("Create incident")))
+				.andExpect(content().string(containsString("Location entered incorrectly.")))
+				.andReturn().getResponse().toString();
+		assertNotNull(message);
+
+		//aditionalProperties wrong 1
+		message = mockMvc.perform(post("/create").sessionAttr("agent", agent)
+				.param("incidentName","Incendio!!")
+				.param("description", "Fire")
+				.param("locationString", "1.54,5.84")
+				.param("tags", "Fuego")
+				.param("aditionalPropertiesString", "Montaña, mucho fuego")
+				.param("topic", "Fuego"))
+				.andExpect(status().isOk())
+				.andExpect(content().string(containsString("Create incident")))
+				.andExpect(content().string(containsString("Additional properties entered incorrectly.")))
+				.andReturn().getResponse().toString();
+		assertNotNull(message);
+
+		//aditionalProperties wrong 2
+		message = mockMvc.perform(post("/create").sessionAttr("agent", agent)
+				.param("incidentName","Incendio!!")
+				.param("description", "Fire")
+				.param("locationString", "1.54,5.84")
+				.param("tags", "Fuego")
+				.param("aditionalPropertiesString", "Montaña y mucho fuego")
+				.param("topic", "Fuego"))
+				.andExpect(status().isOk())
+				.andExpect(content().string(containsString("Create incident")))
+				.andExpect(content().string(containsString("Additional properties entered incorrectly.")))
 				.andReturn().getResponse().toString();
 		assertNotNull(message);
 	}

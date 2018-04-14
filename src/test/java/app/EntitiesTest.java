@@ -113,7 +113,7 @@ public class EntitiesTest {
         assertNotNull(user);
         assertTrue(user.equals(user));
         assertFalse(user.equals(null));
-        assertFalse(user.equals(new Operator()));
+        assertFalse(user.equals(new Incident()));
         assertFalse(user.hashCode() == user2.hashCode());
         assertFalse(user.equals(user2));
         assertTrue(user.equals(user4));

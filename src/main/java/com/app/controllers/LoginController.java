@@ -40,7 +40,7 @@ public class LoginController {
 		
 		session.setAttribute("agent", agent);
 		
-		return "redirect:/create/" + agent.getId();
+		return "redirect:/create";//	/" + agent.getId();
 	}
 
 }
