@@ -48,7 +48,9 @@
 
 			<label for="createAditionalProperties" class="grey-text">Aditional information</label>
 			<input type="text" id="aditionalPropertiesString" class="form-control" name="aditionalPropertiesString"
-				   placeholder="Example: picture/imgur.com, video/youtube.com" style="width: 130%"></input>
+				   placeholder="Example: propertyName/value[, otherProperty/value]" style="width: 130%"></input>
+			<span class="text-danger" th:if="${#fields.hasErrors('aditionalPropertiesString')}"
+				  th:errors="*{aditionalPropertiesString}"></span>
 			<br/>
 
 			<label for="createTopics" class="grey-text">Topics</label>

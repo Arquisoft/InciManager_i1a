@@ -55,7 +55,7 @@ public class MainControllerTest {
 	
 	@Test
 	public void createIncorrect() throws Exception {
-		String message = mockMvc.perform(get("/create/8"))
+		String message = mockMvc.perform(get("/create"))
 				.andExpect(status().is3xxRedirection())
 				.andReturn().getResponse().getErrorMessage();
 		assertNull(message);
@@ -66,7 +66,7 @@ public class MainControllerTest {
 		Agent origin = new Agent("","","lucia123","8",1);
 		Agent agent = agentService.findById(origin);
 		
-		String message = mockMvc.perform(get("/create/8").sessionAttr("agent", agent))
+		String message = mockMvc.perform(get("/create").sessionAttr("agent", agent))
 				.andExpect(status().isOk())
 				.andExpect(content().string(containsString("Create incident")))
 				.andReturn().getResponse().getErrorMessage();
