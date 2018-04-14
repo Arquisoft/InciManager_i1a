@@ -131,6 +131,47 @@ public class IncidentValidatorTest {
 				.andExpect(content().string(containsString("This field must not be empty")))
 				.andReturn().getResponse().toString();
 		assertNotNull(message);
+
+		//wrong location
+		message = mockMvc.perform(post("/create")
+				.param("incidentName","Incendio!!")
+				.param("description", "Fire")
+				.param("locationString", "1.54 5.84")
+				.param("tags", "Fuego")
+				.param("topic", "Fuego"))
+				.andExpect(status().isOk())
+				.andExpect(content().string(containsString("Create incident")))
+				.andExpect(content().string(containsString("Location entered incorrectly.")))
+				.andReturn().getResponse().toString();
+		assertNotNull(message);
+
+		//aditionalProperties wrong 1
+		message = mockMvc.perform(post("/create")
+				.param("incidentName","Incendio!!")
+				.param("description", "Fire")
+				.param("locationString", "1.54,5.84")
+				.param("tags", "Fuego")
+				.param("aditionalPropertiesString", "Montaña, mucho fuego")
+				.param("topic", "Fuego"))
+				.andExpect(status().isOk())
+				.andExpect(content().string(containsString("Create incident")))
+				.andExpect(content().string(containsString("Additional properties entered incorrectly.")))
+				.andReturn().getResponse().toString();
+		assertNotNull(message);
+
+		//aditionalProperties wrong 2
+		message = mockMvc.perform(post("/create")
+				.param("incidentName","Incendio!!")
+				.param("description", "Fire")
+				.param("locationString", "1.54,5.84")
+				.param("tags", "Fuego")
+				.param("aditionalPropertiesString", "Montaña y mucho fuego")
+				.param("topic", "Fuego"))
+				.andExpect(status().isOk())
+				.andExpect(content().string(containsString("Create incident")))
+				.andExpect(content().string(containsString("Additional properties entered incorrectly.")))
+				.andReturn().getResponse().toString();
+		assertNotNull(message);
 	}
 
 }

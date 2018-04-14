@@ -47,7 +47,7 @@ public class IncidentValidator implements Validator {
 
 	private void parseAditionalProperties(Incident incident, Errors errors) {
 		if (incident.getAditionalPropertiesString() != null && !incident.getAditionalPropertiesString().isEmpty()) {
-			if( incident.getAditionalPropertiesString().contains(",")) {
+			if( incident.getAditionalPropertiesString().contains(",") ) {
 				String[] aditionalProperties = incident.getAditionalPropertiesString().trim().split(",");
 				Map<String, String> result = new HashMap<String, String>();
 				for (int i = 0; i < aditionalProperties.length; i++) {
