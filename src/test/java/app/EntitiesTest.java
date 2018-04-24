@@ -216,10 +216,10 @@ public class EntitiesTest {
 		String password = "123456";
 		
 		Operator operator1 = new Operator(username, password);
-		assertEquals("Operator [id='null', username='Operator1', password='123456']", operator1.toString());
+		assertEquals("Operator [idautogenerado='null', username='Operator1', password='123456']", operator1.toString());
 		
 		Operator operator2 = new Operator();
-		assertEquals("Operator [id='null', username='null', password='null']", operator2.toString());
+		assertEquals("Operator [idautogenerado='null', username='null', password='null']", operator2.toString());
 		
 		assertNull(operator1.getIdautogenerado());
 		
