@@ -1,10 +1,12 @@
 package com.app.entities;
 
-public class Operator {
+import org.springframework.data.annotation.Id;
 
+public class Operator {
+	@Id
 	private String idautogenerado;
 
-	private Long id;
+//	private Long id;
 
 	private String username;
 	private String password;
@@ -22,13 +24,13 @@ public class Operator {
 		return idautogenerado;
 	}
 
-	public Long getId() {
-		return id;
-	}
-
-	public void setId(Long id) {
-		this.id = id;
-	}
+//	public Long getId() {
+//		return id;
+//	}
+//
+//	public void setId(Long id) {
+//		this.id = id;
+//	}
 
 	public String getUsername() {
 		return username;
@@ -48,7 +50,7 @@ public class Operator {
 
 	@Override
 	public String toString() {
-		return "Operator [id='" + id + "', username='" + username + "', password='" + password + "']";
+		return "Operator [idautogenerado='" + idautogenerado  + "', username='" + username + "', password='" + password + "']";
 	}
 	
 }
