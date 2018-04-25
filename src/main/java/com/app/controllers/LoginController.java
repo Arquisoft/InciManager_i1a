@@ -37,7 +37,7 @@ public class LoginController {
 		if (!agentInfoService.verifyAgent(agent) && result.hasErrors()) {
 			return "login";
 		}
-		
+		agent=agentInfoService.findById(agent);
 		session.setAttribute("agent", agent);
 		
 		return "redirect:/create";//	/" + agent.getId();

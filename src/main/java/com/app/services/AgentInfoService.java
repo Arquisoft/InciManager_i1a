@@ -23,8 +23,12 @@ public class AgentInfoService {
 			header.setContentType(MediaType.APPLICATION_JSON);
 
 			JSONObject request = new JSONObject();
+			request.put("idautogenerado", agentInfo.getIdautogenerado());
+			request.put("name", agentInfo.getName());
+			request.put("email", agentInfo.getEmail());
 			request.put("id", agentInfo.getId());
 	        request.put("password", agentInfo.getPassword());
+	        request.put("location", agentInfo.getLocation());
 			request.put("kind", agentInfo.getKind());
 
 			HttpEntity<String> entity = new HttpEntity<String>(request.toString(), header);
@@ -35,11 +39,6 @@ public class AgentInfoService {
 		}
 		
         return response;
-	}
-
-	public String getLocation(Agent agentInfo) {
-		// TODO
-		return "";
 	}
 		
 	public boolean verifyAgent(Agent agentInfo) {
