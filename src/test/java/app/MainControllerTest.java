@@ -13,14 +13,12 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.boot.test.IntegrationTest;
-import org.springframework.boot.test.SpringApplicationConfiguration;
-import org.springframework.boot.test.TestRestTemplate;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
-import org.springframework.web.client.RestTemplate;
 import org.springframework.web.context.WebApplicationContext;
 
 import com.app.MainApplication;
@@ -29,12 +27,10 @@ import com.app.services.AgentInfoService;
 
 @SuppressWarnings("deprecation")
 @RunWith(SpringJUnit4ClassRunner.class)
-@SpringApplicationConfiguration(classes = {MainApplication.class})
-@WebAppConfiguration
-@IntegrationTest({"server.port=0"})
+@SpringBootTest(classes = {MainApplication.class}, webEnvironment = SpringBootTest.WebEnvironment.DEFINED_PORT)
 public class MainControllerTest {
 
-	@Value("${local.server.port}")
+	@Value("${local.server.port:8081}")
 	private int port;
 
 	private MockMvc mockMvc;
@@ -48,7 +44,7 @@ public class MainControllerTest {
 	@Before
 	public void setUp() throws Exception {
 		URL base = new URL("http://localhost:" + port);
-		RestTemplate template = new TestRestTemplate();
+		TestRestTemplate template = new TestRestTemplate();
 		template.getForEntity(base.toString(), String.class);
 		mockMvc = MockMvcBuilders.webAppContextSetup(context).build();
 	}
