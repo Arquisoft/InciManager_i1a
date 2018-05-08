@@ -30,7 +30,7 @@ public class LoginSteps {
 
 	private MockMvc mockMvc;
 
-	private ResultActions result;
+	private ResultActions resultValidLogin;
 
 	@InjectMocks
 	private MainController maincontroller;
@@ -47,18 +47,16 @@ public class LoginSteps {
 
 	@When("^I login with name \"([^\"]*)\", password \"([^\"]*)\" and kind \"([^\"]*)\"$")
 	public void i_login_with_name_password_and_kind(String id, String password, String kind) throws Throwable {
-		MockHttpServletRequestBuilder request = post("/login").
-				param("id", id).
-				param("password", password).
-				param("kind",kind);
+		MockHttpServletRequestBuilder request = post("/login").param("id", id).param("password", password).param("kind",
+				kind);
 
-		result = mockMvc.perform(request);
+		resultValidLogin = mockMvc.perform(request);
 
 	}
 
 	@Then("^I can create a new incident$")
 	public void i_can_create_a_new_incident() throws Throwable {
-		result.andExpect(content().string((contains("Create incident"))));
+		resultValidLogin.andExpect(content().string((contains("Create incident"))));
 
 	}
 
