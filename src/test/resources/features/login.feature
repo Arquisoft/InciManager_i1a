@@ -2,10 +2,10 @@ Feature: Being able to login
 Scenario: Login
   Login with some username
 
-    Given a list of users:
-      | name    | password |
-      | pepe    | pepe12   |
-      | luis    | siuldfdfdf     |
-      | mari    | mmm      |
-    When I login with name "luis" and password "siul"
-    Then I receive a welcome message
+    Given a list of agents:
+      | id    | password 	| kind 	|
+      | 5    	| pepe123	|	1	|
+      | 333 	 	| juan123   |	1	|
+    
+    When I login with name "5", password "pepe123" and kind "1"
+    Then I can create a new incident
