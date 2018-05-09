@@ -7,7 +7,7 @@ Scenario: Login
       | 5		| pepe123	|	1	|
       | 333 	 	| juan123	|	1	|
     
-    When I login with name "5", password "pepe123" and kind "1"
+    Then I login with name "5", password "pepe123" and kind "1"
     Then I can create a new incident
  
  
